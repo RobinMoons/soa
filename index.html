@@ -14,8 +14,8 @@ and open the template in the editor.
                 function clearOw(){
                     $("#resultaatOw").text(" ");
                 }
-                function doeRequestOw() {
-                    $.ajax("http://api.openweathermap.org/data/2.5/forecast?id=2800866&units=metric&APPID=a4a530758bce79a5b8ef70c4b2a2a71b&mode=json",
+                function doeRequestOw(id) {
+                    $.ajax("http://api.openweathermap.org/data/2.5/forecast?id=" + id + "&units=metric&APPID=a4a530758bce79a5b8ef70c4b2a2a71b&mode=json",
                     {
                         data: {
                             format: 'json'
@@ -40,8 +40,8 @@ and open the template in the editor.
                 function clearYh(){
                     $("#resultaatYh").text(" ");
                 }
-                function doeRequestYh() {                    
-                    $.ajax("https://query.yahooapis.com/v1/public/yql?q=select%20astronomy.sunset%20from%20weather.forecast%20where%20woeid%20in%20(select%20woeid%20from%20geo.places(1)%20where%20text%3D%22maui%2C%20hi%22)&format=xml&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys",
+                function doeRequestYh(city,countryCode) {                    
+                    $.ajax("https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20weather.forecast%20where%20woeid%20in%20(select%20woeid%20from%20geo.places(1)%20where%20text%3D%22" + city + "%2C%20" + countryCode +"%22)&format=xml&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys",
                     {
                         data: {
                             format: 'xml'
@@ -65,8 +65,7 @@ and open the template in the editor.
                     $("#resultaatName").text(" ");
                 }
                 function doeRequestName() {                    
-                    //$.ajax("http://example-project-166511.appspot.com/hello?name=Robin&achtername=Bamps",
-                    $.ajax("http://example-project-166511.appspot.com/hello?",
+                    $.ajax("http://usermanager-167313.appspot.com/hello?",
                     {
                         data: {
                             name: $("#naam").val(),
@@ -78,7 +77,9 @@ and open the template in the editor.
                         success: function (data) {
                             //alert("gelukt");                            
                             console.log(data);
-                            $("#resultaatName").text(data);
+                            doeRequestOw(data);
+                            doeRequestYh("hoeselt", "be");
+                            $("#resultaatName").text("Hallo " + name + " het weerbericht voor uw locatie <"+ data + "> is: " );
                         },
                         error: function (data) {
                             alert("fout: heeft u: " +"https://chrome.google.com/webstore/detail/allow-control-allow-origi/nlfbmbojpeacfghkpbjhddihlkkiljbi" + " geïnstalleerd?");
@@ -88,24 +89,24 @@ and open the template in the editor.
                 }
             </script>
     </head>
-    <body>
-        <div>Get Weatherdata</div>
+    <body>               
         <div> 
-            <input type="button" value="Get data from OpenWeatherMap" onclick="doeRequestOw();" /><input type="button" value="Clear" onclick="clearOw();" />
+            <input type="button" value="Login" onclick="doeRequestName();" /><input type="button" value="Clear" onclick="clearName();" />
+            <input type="text" id="naam" /><input type="text" id="achternaam" />
+            <p id="resultaatName">         
+            </p>
+        </div>
+        
+        <div>Weather from OpenWeathermap</div>
+        <div> 
+            <input type="button" value="Clear" onclick="clearOw();" />
             <p id="resultaatOw">         
             </p>
         </div>
-        
+        <div>Weather from Yahoo</div>
         <div> 
-            <input type="button" value="Get data from Yahoo" onclick="doeRequestYh();" /><input type="button" value="Clear" onclick="clearYh();" />
+            <input type="button" value="Clear" onclick="clearYh();" />
             <p id="resultaatYh">         
-            </p>
-        </div>
-        
-        <div> 
-            <input type="button" value="Test name service" onclick="doeRequestName();" /><input type="button" value="Clear" onclick="clearName();" />
-            <input type="text" id="naam" /><input type="text" id="achternaam" />
-            <p id="resultaatName">         
             </p>
         </div>
         
