@@ -32,7 +32,28 @@
         
         <script type="text/javascript">
             function jsLogin(){
-                window.location.href = "/user_page/index.html";
+                username = $("#form-username").val();
+                passwoord = $("#form-password").val();
+                //alert (username + " " + passwoord);
+                $.ajax("http://localhost/SOAproject/UserService_PHP/usermanagerREST.php",
+                {
+                    data:{
+                        methode: "check",
+                        gebruikersnaam: username,
+                        wachtwoord: passwoord,
+                    },
+                    type: "POST",
+                    success: function (data){
+                        //alert(data.gebruiker.gebruikersnaam + " ingelogd!");
+                        window.location.href = "user_page/index.html";
+                    },
+                    error: function(data){
+                        alert("gebruikersnaam of passwoord incorrect!");
+                    }
+                    
+                });
+                
+                //window.location.href = "/user_page/index.html";
                 //alert("klikked");
             }
         </script> 
@@ -50,6 +71,7 @@
                         <div class="col-sm-8 col-sm-offset-2 text">
                             <h1><strong>SOA project</strong> </h1> 
                             <h1>Kobe Bamps & Robin Moons</h1>
+							<h1>REST login</h1>
                             <div class="description">
                             	<p>
 	                            	Log in met uw username en password om uw info op maat te ontdekken!

@@ -30,10 +30,9 @@ public class DataStoreServlet_create extends HttpServlet {
         String pGreen = request.getParameter("green");
 
         JSONObject json = new JSONObject();
+
         response.setHeader("Access-Control-Allow-Origin", "*");
         response.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
-        response.setContentType("application/json");
-        response.setCharacterEncoding("utf-8");
         response.setContentType("application/json");
         response.setCharacterEncoding("utf-8");
 
