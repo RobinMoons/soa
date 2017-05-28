@@ -30,11 +30,16 @@ public class DataStoreServlet_create extends HttpServlet {
         String pGreen = request.getParameter("green");
 
         JSONObject json = new JSONObject();
+        response.setHeader("Access-Control-Allow-Origin", "*");
+        response.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+        response.setContentType("application/json");
+        response.setCharacterEncoding("utf-8");
         response.setContentType("application/json");
         response.setCharacterEncoding("utf-8");
 
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 
+        //database url: https://console.cloud.google.com/datastore/entities/query?project=usermanager-167313&ns=&kind=providers
         //voorbeeld: http://usermanager-167313.appspot.com/create?key=adminusers&name=Wils&firstName=Joris&postal=3910&acces=get
         //voorbeeld: http://usermanager-167313.appspot.com/create?key=5657382461898752&name=Lampiris&normal=0.0486&day=0.0579&night=0.0389&green=0.0112
         //only with "adminusers" credentials is it possible to create a user

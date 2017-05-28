@@ -27,6 +27,8 @@ public class DataStoreServlet_getData extends HttpServlet {
     // if user has 'get' rights, return distributor info
     // http://usermanager-167313.appspot.com/getData?&key=5657382461898752&distributor=Engie
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setHeader("Access-Control-Allow-Origin", "*");
+        response.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
         response.setContentType("application/json");
         response.setCharacterEncoding("utf-8");
         PrintWriter out = response.getWriter();
@@ -148,8 +150,8 @@ public class DataStoreServlet_getData extends HttpServlet {
     }
     protected void doOptions(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
         //Tell the browser what requests we allow.
-        response.setHeader("Allow", "GET, POST, OPTIONS");
-        response.getWriter().println("method 'getData' documentation:");
+        response.setHeader("Access-Control-Allow-Origin", "*");
+        response.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
         response.setContentType("application/json");
         response.setCharacterEncoding("utf-8");
         JSONObject methods = new JSONObject();
