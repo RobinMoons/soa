@@ -208,7 +208,6 @@ public class DataStoreServlet_create extends HttpServlet {
             parameters.put("day", paramDay);
             parameters.put("night", paramNight);
             parameters.put("green", paramGreen);
-
             JSONObject postmethod = new JSONObject();
             postmethod.put("description", "Add distributor to database");
             postmethod.put("parameters", parameters);
