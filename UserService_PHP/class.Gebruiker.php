@@ -9,6 +9,7 @@
  * @pw_element string $locatie
  * @pw_element string $owid
  * @pw_element string $energieleverancier
+ * @pw_element string $enid
  * @pw_complex Gebruiker
  */
 class Gebruiker {
@@ -45,11 +46,16 @@ class Gebruiker {
      * @var string
      */
     public $energieleverancier;
+    
+    /*
+     * @var string
+     */
+    public $enid;
 
     /**
      * 
      */
-    function __construct($id,$gebruikersnaam,$voornaam,$achternaam,$licentie,$locatie,$owid,$energieleverancier) {
+    function __construct($id,$gebruikersnaam,$voornaam,$achternaam,$licentie,$locatie,$owid,$energieleverancier,$enid) {
         $this->id = $id;
         $this->gebruikersnaam = $gebruikersnaam;
         $this->voornaam = $voornaam;
@@ -58,6 +64,7 @@ class Gebruiker {
         $this->locatie = $locatie;
         $this->owid = $owid;
         $this->energieleverancier = $energieleverancier;
+        $this->enid = $enid;
     }
     
     function getId() {
@@ -91,10 +98,13 @@ class Gebruiker {
     function getEnergieleverancier() {
         return $this->energieleverancier;
     }
+    function getEnid() {
+        return $this->enid;
+    }
     
     function getJSON() {
         $list = array("id" => $this->id, "gebruikersnaam" =>  $this->gebruikersnaam,"voornaam" =>  $this->voornaam,"achternaam" =>  $this->achternaam,
-        "licentie" =>  $this->licentie,"locatie" =>  $this->locatie,"owid" =>  $this->owid,"energieleverancier" =>  $this->energieleverancier);
+        "licentie" =>  $this->licentie,"locatie" =>  $this->locatie,"owid" =>  $this->owid,"energieleverancier" =>  $this->energieleverancier,"enid" =>  $this->enid);
         return json_encode(array("gebruiker"=>$list));
     }
     
