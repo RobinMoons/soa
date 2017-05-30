@@ -92,6 +92,7 @@
                             <div class="description">
                             	<p>
 	                            	Log in met uw username en password om uw info op maat te ontdekken!
+                                        
                             	</p>
                             </div>
                         </div>
