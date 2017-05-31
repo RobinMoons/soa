@@ -46,7 +46,7 @@
                     },
                     type: "POST",
                     success: function (data){
-                        alert(data);
+                        //alert(data);
                         startSession(JSON.stringify(data));
                     },
                     error: function(data){

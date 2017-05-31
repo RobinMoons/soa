@@ -30,7 +30,7 @@ class Usermanager {
         $gebruiker = NULL;
         if ($succes) {
             while ($rij = $stmt->fetch()) {
-                $gebruiker = new Gebruiker($rij['id'], $gebruikersnaam, $rij['voornaam'], $rij['achternaam'], $rij['licentie'], $rij['locatie'], $rij['owid'], $rij['energieleverancier']);
+                $gebruiker = new Gebruiker($rij['id'], $gebruikersnaam, $rij['voornaam'], $rij['achternaam'], $rij['licentie'], $rij['locatie'], $rij['owid'], $rij['energieleverancier'],$rij['enid']);
             }
         }
         return $gebruiker;
