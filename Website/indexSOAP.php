@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -31,9 +33,45 @@
         <script type="text/javascript" src="jquery-3.2.1.min.js"></script> 
         
         <script type="text/javascript">
-            function jsLogin(){
-                window.location.href = "/user_page/index.html";
+            function jsLogin(){                
+                username = $("#form-username").val();
+                passwoord = $("#form-password").val();
+                //alert (username + " " + passwoord);
+                $.ajax("http://localhost/SOAproject/Website/LoginClientSoap.php",
+                {
+                    data:{
+                        methode: "login",
+                        gebruikersnaam: username,
+                        wachtwoord: passwoord
+                    },
+                    type: "POST",
+                    success: function (data){
+                        //alert(data);
+                        startSession(JSON.stringify(data));
+                    },
+                    error: function(data){
+                        alert("gebruikersnaam of passwoord incorrect!");
+                    }                    
+                });              
+                
+                //window.location.href = "/user_page/index.html";
                 //alert("klikked");
+            }
+            function startSession(user){
+                $.ajax("http://localhost/SOAproject/Website/session.php",
+                {
+                   type: "POST",   
+                   data : {
+                       gebruiker: user
+                   },                                    
+                   success: function(data){            
+                        //alert(data);
+                        window.location.href = "user_page/index.php";
+                   },
+                   error: function(data){
+                        alert("start session failed");
+                    }
+                });
             }
         </script> 
 
@@ -54,6 +92,7 @@
                             <div class="description">
                             	<p>
 	                            	Log in met uw username en password om uw info op maat te ontdekken!
+                                        
                             	</p>
                             </div>
                         </div>
