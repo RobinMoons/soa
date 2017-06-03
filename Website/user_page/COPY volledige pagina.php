@@ -49,8 +49,13 @@
     <script type="text/javascript" src="jquery-3.2.1.min.js"></script> 
     
     <script type="text/javascript">
+        var jsonData;     
+        var sunrise;
+        var sunset;
+        var now;
         $( function(){
-          getWeatherOw();
+           getForecastOw(); 
+           getWeatherOw();
         });
            
         function draw(v){
@@ -110,36 +115,13 @@
                     format: 'json'
                 },
                 dataType: 'json',
-                success: function (data) { 
+                success: function (data) {                    
+                    var jsonString = JSON.stringify(data);                    
                     sunrise = data.sys.sunrise;
                     sunrise = new Date(sunrise*1000);
-                    //alert(sunrise);
-                    sessionStorage.setItem("Sunrise",sunrise.getHours() *60  + sunrise.getMinutes());
                     sunset = data.sys.sunset;
                     sunset = new Date(sunset*1000);
-                    sessionStorage.setItem("Sunset",sunset.getHours() * 60 + sunset.getMinutes());
                     now = new Date();
-                    var prefix = 'wi wi-owm-';
-                    var code = data.weather[0].id;                   
-                    // If we are not in the ranges mentioned above, add a day/night prefix.
-                    if (!(code > 699 && code < 800) && !(code > 899 && code < 1000)) {
-                        if (now > sunrise && now < sunset ){
-                            icon = 'day-' + code;
-                        }
-                        else
-                        {
-                            icon = 'night-' + code;
-                        }                        
-                    }
-                    else
-                    {
-                        icon = code;
-                    }
-                    // Finally tack on the prefix.
-                    icon = prefix + icon;   
-                    $("#icoOw").addClass(icon);
-                    $("#dateTime").text(now);
-                    
                 },
                 error: function (data) {
                     alert("fout");
@@ -147,7 +129,6 @@
             }
             );   
         }
-        
         function getForecastOw() {
             //checkSession();
             var id =  "<?php echo json_decode($_SESSION['gebruiker'])->gebruiker->owid?>";
@@ -164,7 +145,9 @@
                     //console.log(data);
                     //$("#resultaatOw").text(xmlString);
                     var prefix = 'wi wi-owm-';
-                    var code = data.list[0].weather[0].id;                   
+                    var code = data.list[0].weather[0].id;
+                                      
+                    alert(code);
                     // If we are not in the ranges mentioned above, add a day/night prefix.
                     if (!(code > 699 && code < 800) && !(code > 899 && code < 1000)) {
                         if (now > sunrise && now < sunset ){
@@ -173,7 +156,8 @@
                         else
                         {
                             icon = 'night-' + code;
-                        }                        
+                        }
+                        
                     }
                     else
                     {
@@ -194,7 +178,13 @@
             }
             );            
         }
-        
+        function clearOw(){
+            //checkSession();
+            $("#resultaatOw").text(" ");
+        }
+        function clearYh(){
+            $("#resultaatYh").text(" ");
+        }
         function doeRequestYh() {   
             var city ="<?php echo (json_decode($_SESSION['gebruiker'])->gebruiker->locatie)?>";
             var countryCode = "BE";
@@ -271,8 +261,7 @@
 
         <div id="wrapper" class="toggled">
 
-        <?php include 'menu.php'; ?>
-
+       <?php include 'menu.php'; ?>
        
 
         <!-- Page Content -->
@@ -281,14 +270,14 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <h1>Welkom <?php echo json_decode($_SESSION['gebruiker'])->gebruiker->voornaam?>  <?php echo json_decode($_SESSION['gebruiker'])->gebruiker->achternaam?>  </h1>    
-                                                     
+                             
+                        <div>Weather from OpenWeathermap</div>
+                        
+                        <input type="button" value="Clear" onclick="clearOw();" />
                         <div>       
-                            <h3 id="dateTime"></h3>
-                            <h1><i id="icoOw"></i></h1>                            
+                            <h1><i id="icoOw"></i></h1>
                             <p id="resultaatOw"> </p>
                         </div>
-                        
-                        <!--
                         <div>Weather from Yahoo</div>
                         <input type="button" value="Clear" onclick="clearYh();" />
                         <div>      
@@ -305,7 +294,6 @@
                         <div>Draw Chart</div>
                         <input type="button" value="Draw" onclick="draw();" />                            
                         <div id="curve_chart" style="width: 900px; height: 500px"></div>
-                        -->
                         <!-- Toggle button for the menu
                         <a href="#menu-toggle" class="btn btn-default" id="menu-toggle">Toggle menu</a>
                         -->
