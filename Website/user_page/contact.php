@@ -47,7 +47,7 @@
     <![endif]-->
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript" src="jquery-3.2.1.min.js"></script> 
-    
+    <script type="text/javascript" src="require.js"></script> 
     <script type="text/javascript">             
         function logout(){            
             $.ajax("http://localhost/SOAproject/Website/session.php",
@@ -62,13 +62,31 @@
             });        
         }   
         function sendMail(){
-            var link = "mailto:robin_moons@student.uhasselt.be"
-             + "?cc=kobe.bamps@student.uhasselt.be"
-             + "&subject=" + escape("contact request")
-             + "&body=" + escape(document.getElementById('message').value)
-            ;
-            window.location.href = link;
+            name = $("#name").val();
+            email = $("#email").val();
+            message = $("#message").val();
+            
+             $.ajax("sendMail.php",
+            {
+                data:{
+                    _email_to: email,
+                    _message: message,
+                    _name: name
+                },
+                type: "POST",
+                 success: function (data){
+                     //alert(data);   
+                     //document.getElementById("sendComplete").innerHTML = "Contact aanvraag verzonden!";
+                     //$("sendComplete").text("Contact aanvraag verzonden!");
+                 },
+                 error: function(data){
+                     //alert(data);
+                    // document.getElementById("sendComplete").innerHTML = "Kon contact aanvraag niet verzenden!";
+                 }    
+            });
+                      
         }
+          
     </script> 
     
 </head>
@@ -115,13 +133,15 @@
                       <!-- Form actions -->
                       <div class="form-group">
                         <div class="col-md-12 text-right">
-                            <button type="submit" class="btn btn-primary btn-lg" onclick="sendMail(); return false">Submit</button>
+                            
+                            <button type="button" class="btn btn-primary btn-lg" onclick="sendMail()">Send</button>
                         </div>
                       </div>
-                    </fieldset>
-                    </form>
-                  </div>
+                    </fieldset>                        
+                    </form>                     
+                  </div>                     
                 </div>
+                
 	</div>
         </div>
         <!-- /#page-content-wrapper -->

@@ -118,7 +118,7 @@
 			                        	<label class="sr-only" for="form-password">Password</label>
 			                        	<input type="password" name="form-password" placeholder="Password..." class="form-password form-control" id="form-password">
 			                        </div>
-			                        <button type="button" onclick="jsLogin();" class="btn">Sign in!</button>
+			                        <button type="submit" onclick="jsLogin();" class="btn">Sign in!</button>
 			                    </form>
 		                    </div>
                         </div>
