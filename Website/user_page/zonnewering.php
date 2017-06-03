@@ -156,8 +156,7 @@
         }
        
         function calculate() {
-            //checkSession();
-            
+            //checkSession();            
             var id =  "<?php echo json_decode($_SESSION['gebruiker'])->gebruiker->owid?>";
             $.ajax("http://api.openweathermap.org/data/2.5/forecast?id=" + id + "&units=metric&APPID=a4a530758bce79a5b8ef70c4b2a2a71b&mode=json",
             {
@@ -169,9 +168,6 @@
                     //alert("gelukt");
                     //var xmlString = (new XMLSerializer()).serializeToString(data);
                     var jsonString = JSON.stringify(data);
-                    //console.log(data);
-                    //$("#resultaatOw").text(xmlString);
-                                     
                     
                     draw(data);
                     //$("#preForXMLResponse").html('<pre>'+data+'</pre>');

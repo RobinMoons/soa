@@ -15,8 +15,8 @@
         }   
         else{
             session_unset(); 
-                session_destroy();
-                header("Location: http://localhost/SOAproject/Website/indexREST.php");
+            session_destroy();
+            header("Location: http://localhost/SOAproject/Website/indexREST.php");
         }
 ?>
 <!DOCTYPE html>
@@ -51,48 +51,9 @@
     <script type="text/javascript">
         $( function(){
           getWeatherOw();
+          doeRequestYh();
         });
-           
-        function draw(v){
-           google.charts.load('current', {'packages':['corechart']});
-           google.charts.setOnLoadCallback(drawChart);      
-           jsonData = v;           
-        }
-        function drawChart() {
-            var dataArray = new google.visualization.DataTable();
-            dataArray.addColumn('string', 'Time');
-            dataArray.addColumn('number', 'min. temperatuur');
-            dataArray.addColumn('number', 'max. temperatuur');            
-            
-            for (i = 0; i < jsonData.list.length; i++){
-                dataArray.addRow([jsonData.list[i].dt_txt,       jsonData.list[i].main.temp_min,    jsonData.list[i].main.temp_max]);
-            }
-            //var data = google.visualization.arrayToDataTable(dataArray);
-            /*
-            var data = google.visualization.arrayToDataTable([
-              ['Time',                          'min. temperatuur',                 'max. temperatuur'],
-              [jsonData.list[0].dt_txt,       jsonData.list[0].main.temp_min,    jsonData.list[0].main.temp_max],
-              [jsonData.list[1].dt_txt,       jsonData.list[1].main.temp_min,    jsonData.list[1].main.temp_max],
-              [jsonData.list[2].dt_txt,       jsonData.list[2].main.temp_min,    jsonData.list[2].main.temp_max],
-              [jsonData.list[3].dt_txt,       jsonData.list[3].main.temp_min,    jsonData.list[3].main.temp_max],
-              [jsonData.list[4].dt_txt,       jsonData.list[4].main.temp_min,    jsonData.list[4].main.temp_max],
-              [jsonData.list[5].dt_txt,       jsonData.list[5].main.temp_min,    jsonData.list[5].main.temp_max],
-              [jsonData.list[6].dt_txt,       jsonData.list[6].main.temp_min,    jsonData.list[6].main.temp_max],
-              [jsonData.list[7].dt_txt,       jsonData.list[7].main.temp_min,    jsonData.list[7].main.temp_max],
-              [jsonData.list[8].dt_txt,       jsonData.list[8].main.temp_min,    jsonData.list[8].main.temp_max],
-              [jsonData.list[9].dt_txt,       jsonData.list[9].main.temp_min,    jsonData.list[9].main.temp_max]
-            ]);
-            */
-            var options = {
-              title: 'Min. en max temperatuur',
-              curveType: 'function',
-              legend: { position: 'bottom' }
-            };
-
-            var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
-
-            chart.draw(dataArray, options);
-          }
+        
         function checkSession(){
             $.ajax("http://localhost/SOAproject/Website/session.php",
                 {
@@ -284,7 +245,8 @@
                                                      
                         <div>       
                             <h3 id="dateTime"></h3>
-                            <h1><i id="icoOw"></i></h1>                            
+                            <h1><i id="icoOw"></i></h1>   
+                            <h1><i id="icoYahoo"></i></h1>
                             <p id="resultaatOw"> </p>
                         </div>
                         
