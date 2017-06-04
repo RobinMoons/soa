@@ -134,7 +134,7 @@
                       <div class="form-group">
                         <div class="col-md-12 text-right">
                             
-                            <button type="button" class="btn btn-primary btn-lg" onclick="sendMail()">Send</button>
+                            <button type="submit" class="btn btn-primary btn-lg" onclick="sendMail()">Send</button>
                         </div>
                       </div>
                     </fieldset>                        

@@ -30,7 +30,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Zonnewering</title>
+    <title>Boilerverwarming</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -51,7 +51,24 @@
     <script type="text/javascript">
         
         $( function(){
-           
+           key ="<?php echo (json_decode($_SESSION['gebruiker'])->gebruiker->enid)?>";
+           leverancier = "<?php echo (json_decode($_SESSION['gebruiker'])->gebruiker->energieleverancier)?>";
+           $.ajax("http://usermanager-167313.appspot.com/getData?&key="+ key + "&distributor=" + leverancier,
+            {
+                data: {
+                    format: 'json'
+                },
+                dataType: 'json',
+                success: function (data) {
+                    var jsonString = JSON.stringify(data);   
+                    nachttarief = data["Distributor info"].Nachttarief;
+                    dagtarief = data["Distributor info"].Dagtarief;
+                    //alert(dagtarief + " " + nachttarief);
+                },
+                error: function (data) {
+                    alert("fout");
+                }
+            });
         });
            
         function draw(v){
@@ -60,22 +77,25 @@
            jsonData = v;           
         }
         function drawChart() {
-            //get elements from UI
-            var maxTemp = document.getElementById('maxTemp').value;            
+                      
             //create charts
-            //Temp
-            var tempArray = new google.visualization.DataTable();
-            tempArray.addColumn('string', 'Time');
-            tempArray.addColumn('number', 'temperatuur');
-            tempArray.addColumn('number', 'max. temperatuur');    
+            //price
+            var priceArray = new google.visualization.DataTable();
+            priceArray.addColumn('string', 'Time');
+            priceArray.addColumn('number', 'prijs - leverancier: ' + leverancier );  
+            
             //Cloud
             var cloudArray = new google.visualization.DataTable();
             cloudArray.addColumn('string', 'Time');
             cloudArray.addColumn('number', 'zonneschijn');   
             //Result screens
-            var screensArray = new google.visualization.DataTable();
-            screensArray.addColumn('string', 'Time');
-            screensArray.addColumn('number', 'screens naar onder');
+            
+            var boilerArray = new google.visualization.DataTable();
+            boilerArray.addColumn('string', 'Time');    
+            boilerArray.addColumn('number', 'energiebron');    
+            boilerArray.addColumn({type:'string', role: 'annotation' });   
+            boilerArray.addColumn({type:'string', role: 'style' });
+    
             //loop trough the JSON data to extract data
             for (i = 0; i < jsonData.list.length; i++){
                 var dateTime = jsonData.list[i].dt;
@@ -85,8 +105,8 @@
                 strTimeStamp = String(dateTime);
                 strTimeStamp = strTimeStamp.substring(4,10) + " " + strTimeStamp.substring(16,21);
                 time = hours  * 60 + minutes;
-                //temp data
-                tempArray.addRow([strTimeStamp,       jsonData.list[i].main.temp,    Number(maxTemp)]  );
+               
+                
                 //cloud data
                 var bewolking = jsonData.list[i].weather[0].id;
                 var rateBewolking = 0;
@@ -95,6 +115,7 @@
                 //alert (sunrise + "-" + sunset + "-" + time);
                 if(time > sunrise && time < sunset)
                 {
+                    priceArray.addRow([strTimeStamp,       dagtarief]  );
                     if (bewolking === 800){
                         rateBewolking = 100;
                     }
@@ -105,44 +126,57 @@
                     {
                         rateBewolking = 0;
                     }
+                    if (rateBewolking > 0 ){
+                        boilerArray.addRow([strTimeStamp,       100, 'z',  'color: yellow']);
+                    }
+                    else
+                    {
+                        boilerArray.addRow([strTimeStamp,       100,'e',  'color: green']);
+                    }
                 }
                 else{
+                    priceArray.addRow([strTimeStamp,       nachttarief]  );
                     rateBewolking = 0;
+                    boilerArray.addRow([strTimeStamp,       100,'e',  'color: green']);
                 }                
                 cloudArray.addRow([strTimeStamp,       rateBewolking]  );
-                if(jsonData.list[i].main.temp > maxTemp && rateBewolking > 0){
-                    screensArray.addRow([strTimeStamp,       1]  );
-                }
-                else
-                {
-                    screensArray.addRow([strTimeStamp,       0]  );
-                }
+                
+                
+                
+                
             }
             
             //create the options
-            var tempOptions = {
-              title: 'Min. en max temperatuur',
-              curveType: 'function',
+            var priceOptions = {
+              title: 'prijs ifv dag en nacht',
+              //curveType: 'function',
               legend: { position: 'bottom' }
             };                      
             var cloudOptions = {
               title: 'Zon',
               curveType: 'function',
-              legend: { position: 'bottom' }
-            };           
-            var screensOptions = {
-                title: 'Zonnewering',
+              legend: { position: 'bottom' },            
+            };     
+    
+            var boilerOptions = {
+                title: 'Energiebron opwarmen boiler',
                 bar: {groupWidth: "100%"},
                 //curveType: 'function',
-                legend: { position: 'bottom' }
+                legend: { position: 'bottom' },
+                'vAxis': {'title': ' ',
+                            'minValue': 0, 
+                            'maxValue': 100},
             };
+    
             //create the charts
-            var tempChart = new google.visualization.LineChart(document.getElementById('temp_chart'));
-            tempChart.draw(tempArray, tempOptions);
+            var priceChart = new google.visualization.LineChart(document.getElementById('price_chart'));
+            priceChart.draw(priceArray, priceOptions);
             var cloudChart = new google.visualization.LineChart(document.getElementById('cloud_chart'));
-            cloudChart.draw(cloudArray, cloudOptions);  
-            var screensChart = new google.visualization.ColumnChart(document.getElementById('screens_chart'));
-            screensChart.draw(screensArray, screensOptions);  
+            cloudChart.draw(cloudArray, cloudOptions);      
+            var boilerChart = new google.visualization.ColumnChart(document.getElementById('boiler_chart'));
+            boilerChart.draw(boilerArray, boilerOptions);  
+    
+    
           }
     
         function checkSession(){
@@ -207,16 +241,12 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12">
-                        <h1>Berekening automatische zonneregeling  </h1>    
-                             
-                        <h2>Parameters</h2>                        
-                        Maximum Temperatuur: <input type="text" id="maxTemp"/>
-                        <input type="button" value="Bereken" onclick="calculate();" />
-                        
-                        <h2>Berekening</h2>
-                        <div id="temp_chart" style="width: 600px; height: 250px; float:left"></div>
+                        <h1>Berekening verwarmen van buffervat</h1>    
+                         <input type="button" value="Bereken" onclick="calculate();" />    
+                        <h2>Boiler verwarming</h2>     
                         <div id="cloud_chart" style="width: 600px; height: 250px; float:left"></div>
-                        <div id="screens_chart" style="width: 1200px; height: 500px; float:left"></div>
+                        <div id="price_chart" style="width: 600px; height: 250px; float:left"></div>
+                        <div id="boiler_chart" style="width: 1200px; height: 500px; float:left"></div>
                         
                         
                         <!-- Toggle button for the menu
