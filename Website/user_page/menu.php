@@ -2,7 +2,9 @@
     function navZonnewering(){
         window.location.href = "zonnewering.php";
     }
-    
+    function navBoilerverwarming(){
+        window.location.href = "boilerverwarming.php";
+    }    
     function navHome(){
         window.location.href = "index.php";
     }
@@ -31,7 +33,7 @@
                     <a href="#" onclick="navHome()">Dashboard home</a>
                 </li>
                 <li>
-                    <a href="#" onclick="getForecastOw()">OpenWeathermap test</a>
+                    <a href="#" onclick="navBoilerverwarming()">Boiler verwarming</a>
                 </li>
                 <li>
                     <a href="#" onclick="navZonnewering()">Automatische zonnewering</a>
