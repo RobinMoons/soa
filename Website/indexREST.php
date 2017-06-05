@@ -46,11 +46,15 @@
                     },
                     type: "POST",
                     success: function (data){
-                        //alert(data.gebruiker.gebruikersnaam);
-                        startSession(JSON.stringify(data));
+                        if (typeof data.mislukt === "undefined") {
+                            startSession(JSON.stringify(data));
+                        } else {
+                            alert(data.mislukt);
+                        }
+                        //startSession(JSON.stringify(data));
                     },
                     error: function(data){
-                        alert("gebruikersnaam of passwoord incorrect!");
+                        alert("Oeps er iets iets fout gehouden");
                     }                    
                 });              
                 

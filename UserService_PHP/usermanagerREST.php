@@ -24,7 +24,11 @@ else if (isset($_POST['methode'])) {
     case "check":
         $manager = new Usermanager();
         $gebruiker = $manager->login($_POST['gebruikersnaam'],$_POST['wachtwoord']);
-        print($gebruiker->getJSON());
+        if ($gebruiker == NULL){
+            print(json_encode(["mislukt"=>"gebruikersnaam of paswoord incorrect"]));
+        } else {
+            print($gebruiker->getJSON());
+        }      
         break;
     case "nieuweUser":
         $manager = new Usermanager();
