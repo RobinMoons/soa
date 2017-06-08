@@ -16,6 +16,7 @@ if (!isset($_GET['methode']) && !isset($_POST['methode'])) {
 //  }
 //}
 
+
 else if (isset($_POST['methode'])) {
     header('Content-Type: application/json');
     header('Access-Control-Allow-Origin: *');
