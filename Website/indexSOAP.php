@@ -37,22 +37,26 @@
                 username = $("#form-username").val();
                 passwoord = $("#form-password").val();
                 //alert (username + " " + passwoord);
-                $.ajax("http://localhost/SOAproject/Website/LoginClientSoap.php",
+                $.ajax("http://localhost/SOAproject/UserService_PHP/usermanagerREST.php",
                 {
                     data:{
-                        methode: "login",
+                        methode: "check",
                         gebruikersnaam: username,
                         wachtwoord: passwoord
                     },
                     type: "POST",
                     success: function (data){
-                        //alert(data);
-                        startSession(JSON.stringify(data));
+                        if (typeof data.mislukt === "undefined") {
+                            startSession(JSON.stringify(data));
+                        } else {
+                            alert(data.mislukt);
+                        }
+                        //startSession(JSON.stringify(data));
                     },
                     error: function(data){
-                        alert("gebruikersnaam of passwoord incorrect!");
+                        alert("Oeps er iets iets fout gehouden");
                     }                    
-                });              
+                });               
                 
                 //window.location.href = "/user_page/index.html";
                 //alert("klikked");
