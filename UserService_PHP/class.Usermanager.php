@@ -2,7 +2,7 @@
 /**
  * blabla
  * 
- * @pw_complex GebruikerArray
+ * @pw_complex Gebruiker
  */
 require 'class.Gebruiker.php';
 class Usermanager {
@@ -20,7 +20,7 @@ class Usermanager {
      * 
      * @param string $gebruikersnaam
      * @param string $wachtwoord
-     * @return GebruikerArray klasse gebruiker
+     * @return Gebruiker klasse gebruiker
      */
     public function login($gebruikersnaam, $wachtwoord) {
         $stmt = $this->pdo->prepare("select * FROM klantenbestand");
