@@ -33,6 +33,32 @@
         <script type="text/javascript" src="jquery-3.2.1.min.js"></script> 
         
         <script type="text/javascript">
+        
+            var store = store || {};
+            store.setJWT = function(data){
+                this.JWT = data;
+            };
+
+            function jsGetDataGebruiker() {
+                $.ajax("http://localhost/SOAproject/UserService_PHP/usermanagerREST.php",
+                {
+                    data:{
+                        methode: "dataGebruiker",
+                        data: store.JWT,
+                    },
+                    type: "GET",
+                    success: function (data){
+                        if (typeof data.mislukt === "undefined") {
+                            startSession(JSON.stringify(data));
+                        } else {
+                            alert(data.mislukt);
+                        }
+                    },
+                    error: function(data){
+                        alert("Oeps er iets iets fout gelopen");
+                    }                    
+                });        
+            }
             function jsLogin(){                
                 username = $("#form-username").val();
                 passwoord = $("#form-password").val();
@@ -47,14 +73,14 @@
                     type: "POST",
                     success: function (data){
                         if (typeof data.mislukt === "undefined") {
-                            startSession(JSON.stringify(data));
+                            store.setJWT(data.jwt);
+                            jsGetDataGebruiker();
                         } else {
                             alert(data.mislukt);
                         }
-                        //startSession(JSON.stringify(data));
                     },
                     error: function(data){
-                        alert("Oeps er iets iets fout gehouden");
+                        alert("Oeps er iets iets fout gelopen");
                     }                    
                 });              
                 
@@ -70,7 +96,9 @@
                    },                                    
                    success: function(data){            
                         //alert(data);
-                        window.location.href = "user_page/index.php";
+                        var w = window.location.href = "user_page/index.php";
+                        var token = {JWT : store.JWT};
+                        w.myVariable  = token;
                    },
                    error: function(data){
                         alert("start session failed");
