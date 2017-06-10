@@ -5,6 +5,8 @@
  * @pw_complex Gebruiker
  */
 require 'class.Gebruiker.php';
+
+
 class Usermanager {
 
     private $pdo;
@@ -41,9 +43,8 @@ class Usermanager {
         
         $stmt = $this->pdo->prepare("INSERT INTO klantenbestand(email, gebruikersnaam, wachtwoord) VALUES(:email, :gebruikersnaam, :wachtwoord);");
         $stmt->bindParam(':email',$email);
-        $stmt->bindParam(':gebruikersnaam',$gebruikersnaam);
-        $stmt->bindParam(':wachtwoord',$wachtwoord);
-
+        $stmt->bindParam(':gebruikersnaam',$gebruikersnaam);        
+        $stmt->bindParam(':wachtwoord',password_hash($wachtwoord,PASSWORD_BCRYPT));
         $succes = $stmt->execute();
         if ($succes) {
             return "gebruiker toegevoegd";

@@ -68,7 +68,7 @@
                                 */
                             },
                             error: function(data){
-                                alert("Oeps er iets iets fout gelopen");
+                                alert(JSON.stringify(data));
                             }                    
                         });       
                     }
