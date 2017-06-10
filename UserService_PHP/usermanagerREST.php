@@ -1,7 +1,9 @@
 <?php
 
 require("class.Usermanager.php");
+require("class.Login.php");
 
+use \Login as login;
 if (!isset($_GET['methode']) && !isset($_POST['methode'])) {
     die("No method selected");
 }
@@ -23,6 +25,10 @@ else if (isset($_POST['methode'])) {
     header('Access-Control-Allow-Methods: GET, POST, OPTIONS');
   switch ($_POST['methode']) {
     case "check":
+        echo login::checkLogin($_POST['gebruikersnaam'],$_POST['wachtwoord']);
+        break;
+    /*
+    case "check":
         $manager = new Usermanager();
         $gebruiker = $manager->login($_POST['gebruikersnaam'],$_POST['wachtwoord']);
         if ($gebruiker == NULL){
@@ -31,6 +37,7 @@ else if (isset($_POST['methode'])) {
             print($gebruiker->getJSON());
         }      
         break;
+    */
     case "nieuweUser":
         $manager = new Usermanager();
         print($manager->voegUserToe($_POST['naam'],$_POST['voornaam'],$_POST['woonplaats']));
