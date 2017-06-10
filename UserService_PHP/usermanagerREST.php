@@ -1,14 +1,9 @@
 <?php
 
 require("class.Usermanager.php");
-require("class.Login.php");
-require_once 'php-jwt/src/BeforeValidException.php';
-require_once 'php-jwt/src/ExpiredException.php';
-require_once 'php-jwt/src/SignatureInvalidException.php';
-require_once 'php-jwt/src/JWT.php';
 
-use \Firebase\JWT\JWT;
-use \Login as login;
+require ('/Authenticatie/class.ApiToken.php');
+use \ApiToken as apiToken;
 
 
 header('Content-Type: application/json');
@@ -20,27 +15,28 @@ if (!isset($_GET['methode']) && !isset($_POST['methode'])) {
 }else if (isset($_GET['methode'])) {
     switch ($_GET['methode']) {
         case "dataGebruiker":
-            try {
                 $jwt = $_GET['data'];
-                $key = base64_decode("test");
-                $decoded = JWT::decode($jwt, $key, array('HS512'));
-                $data = $decoded->data;
-                $manager = new Usermanager();
-                $gebruiker = $manager->getGebruiker($data->userId);
-                print (json_encode(array("gebruiker" => $gebruiker)));
-            } catch (Exception $e){
-                print(json_encode(["mislukt"=>"niet gelukt om de JWT token te decoden:" . $e]));
-            }
+                $check = (apiToken::checkToken($jwt));
+                if (isset($check['data'])){
+                    $data = $check['data'];
+                    $manager = new Usermanager();
+                    $gebruiker = $manager->getGebruiker($data->userId);
+                    print (json_encode(array("gebruiker" => $gebruiker)));
+                } else {
+                    print(json_encode($check));
+                }
+                
             break;
         default:
             print("no proper method selected");   
     }
 }else if (isset($_POST['methode'])) {
     switch ($_POST['methode']) {
+        /*
         case "check":
             print json_encode(login::checkLogin($_POST['gebruikersnaam'],$_POST['wachtwoord']));
         break;
-    /*
+    
     case "check":
         $manager = new Usermanager();
         $gebruiker = $manager->login($_POST['gebruikersnaam'],$_POST['wachtwoord']);
