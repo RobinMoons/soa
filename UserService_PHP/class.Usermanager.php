@@ -36,6 +36,23 @@ class Usermanager {
         return $gebruiker;
     }
 
+    public function register($gebruikersnaam, $wachtwoord){        
+        //return ("succes hier");
+        
+        $stmt = $this->pdo->prepare("INSERT INTO klantenbestand(gebruikersnaam, wachtwoord) VALUES(:gebruikersnaam, :wachtwoord);");
+        $stmt->bindParam(':gebruikersnaam',$gebruikersnaam);
+        $stmt->bindParam(':wachtwoord',$wachtwoord);
+        $succes = $stmt->execute();
+        if ($succes) {
+            return "gebruiker toegevoegd";
+        }         
+        else
+        {
+            return "fout opgetreden bij aanmaken gebruiker";
+        }
+        
+    }
+
     public function getGebruiker($id) {
         $stmt = $this->pdo->prepare("select * FROM klantenbestand WHERE id=" .$id);
         $succes = $stmt->execute();

@@ -31,6 +31,7 @@ if (!isset($_GET['methode']) && !isset($_POST['methode'])) {
             print("no proper method selected");   
     }
 }else if (isset($_POST['methode'])) {
+
     switch ($_POST['methode']) {
         /*
         case "check":
@@ -48,14 +49,16 @@ if (!isset($_GET['methode']) && !isset($_POST['methode'])) {
         break;
     */
         case "nieuweUser":
-        $manager = new Usermanager();
-        print($manager->voegUserToe($_POST['naam'],$_POST['voornaam'],$_POST['woonplaats']));
-        break;
-        case "test":
-        print("oke");
+            //print(json_encode("Nieuwe gebruiker toevoegfunctie"));
+            
+            $manager = new Usermanager();            
+            print(json_encode($manager->register($_POST['gebruikersnaam'],$_POST['wachtwoord'])));
+            
+        
         break;
         default:
-        print("no proper method selected");   
+            print(json_encode("no proper method selected"));  
+            break; 
     }
 }
 ?>
