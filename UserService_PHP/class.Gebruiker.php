@@ -110,11 +110,5 @@ class Gebruiker {
     
     */
     
-    function getJSON() {
-        $list = array("id" => $this->id, "gebruikersnaam" =>  $this->gebruikersnaam,"voornaam" =>  $this->voornaam,"achternaam" =>  $this->achternaam,
-        "licentie" =>  $this->licentie,"locatie" =>  $this->locatie,"owid" =>  $this->owid,"energieleverancier" =>  $this->energieleverancier,"enid" => $this->enid);
-        return json_encode(array("gebruiker"=>$list));
-    }
-    
 }
 

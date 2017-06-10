@@ -77,7 +77,6 @@
            jsonData = v;           
         }
         function drawChart() {
-                      
             //create charts
             //price
             var priceArray = new google.visualization.DataTable();

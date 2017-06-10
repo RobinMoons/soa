@@ -9,7 +9,7 @@ if (isset($_POST['gebruikersnaam'])) {
     $object = $client->login($_POST['gebruikersnaam'], $_POST['wachtwoord']);
 
     if ($object == NULL) {
-    	print(json_encode(["mislukt"=>"gebruikersnaam of paswoord incorrect"]);
+    	print(json_encode(["mislukt"=>"gebruikersnaam of paswoord incorrect"]));
     } else {    
     	print(json_encode(array("gebruiker" => $object)));
 	}

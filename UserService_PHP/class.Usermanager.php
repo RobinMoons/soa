@@ -36,6 +36,18 @@ class Usermanager {
         return $gebruiker;
     }
 
+    public function getGebruiker($id) {
+        $stmt = $this->pdo->prepare("select * FROM klantenbestand WHERE id=" .$id);
+        $succes = $stmt->execute();
+        $gebruiker = NULL;
+        if ($succes) {
+            while ($rij = $stmt->fetch()) {
+                $gebruiker = new Gebruiker($rij['id'], $rij['gebruikersnaam'], $rij['voornaam'], $rij['achternaam'], $rij['licentie'], $rij['locatie'], $rij['owid'], $rij['energieleverancier'],$rij['enid']);
+            }
+        }
+        return $gebruiker;
+    }
+
 }
 
 

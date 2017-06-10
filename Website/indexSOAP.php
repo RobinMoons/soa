@@ -37,7 +37,7 @@
                 username = $("#form-username").val();
                 passwoord = $("#form-password").val();
                 //alert (username + " " + passwoord);
-                $.ajax("http://localhost/SOAproject/UserService_PHP/usermanagerREST.php",
+                $.ajax("http://localhost/SOAproject/Website/LoginClientSoap.php",
                 {
                     data:{
                         methode: "check",
