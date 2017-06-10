@@ -36,12 +36,14 @@ class Usermanager {
         return $gebruiker;
     }
 
-    public function register($gebruikersnaam, $wachtwoord){        
+    public function register($email, $gebruikersnaam, $wachtwoord){        
         //return ("succes hier");
         
-        $stmt = $this->pdo->prepare("INSERT INTO klantenbestand(gebruikersnaam, wachtwoord) VALUES(:gebruikersnaam, :wachtwoord);");
+        $stmt = $this->pdo->prepare("INSERT INTO klantenbestand(email, gebruikersnaam, wachtwoord) VALUES(:email, :gebruikersnaam, :wachtwoord);");
+        $stmt->bindParam(':email',$email);
         $stmt->bindParam(':gebruikersnaam',$gebruikersnaam);
         $stmt->bindParam(':wachtwoord',$wachtwoord);
+
         $succes = $stmt->execute();
         if ($succes) {
             return "gebruiker toegevoegd";

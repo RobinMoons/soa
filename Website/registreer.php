@@ -53,8 +53,8 @@
                             data:{
                                 methode: "nieuweUser",
                                 gebruikersnaam: username,
-                                wachtwoord: passwoord
-                                //email nog toevoegen
+                                wachtwoord: passwoord,
+                                emailadres: email
                             },
                             type: "POST",
                             success: function (data){
