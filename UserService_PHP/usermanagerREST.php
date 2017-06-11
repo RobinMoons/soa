@@ -12,6 +12,7 @@ header('Access-Control-Allow-Methods: GET, POST, OPTIONS');
 
 if (!isset($_GET['methode']) && !isset($_POST['methode'])) {
     die("No method selected");
+    
 }else if (isset($_GET['methode'])) {
     switch ($_GET['methode']) {
         case "dataGebruiker":

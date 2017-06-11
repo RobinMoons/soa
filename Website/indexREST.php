@@ -71,8 +71,7 @@
                     },
                     type: "POST",
                     success: function (data){
-                        alert(JSON.stringify(data));
-                        
+                        //alert(JSON.stringify(data));                        
                         if (typeof data.mislukt === "undefined") {
                             store.setJWT(data.jwt);
                             jsGetDataGebruiker();
