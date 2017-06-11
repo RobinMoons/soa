@@ -32,22 +32,8 @@ if (!isset($_GET['methode']) && !isset($_POST['methode'])) {
     }
 }else if (isset($_POST['methode'])) {
 
-    switch ($_POST['methode']) {
-        /*
-        case "check":
-            print json_encode(login::checkLogin($_POST['gebruikersnaam'],$_POST['wachtwoord']));
-        break;
-    
-    case "check":
-        $manager = new Usermanager();
-        $gebruiker = $manager->login($_POST['gebruikersnaam'],$_POST['wachtwoord']);
-        if ($gebruiker == NULL){
-            print(json_encode(["mislukt"=>"gebruikersnaam of paswoord incorrect"]));
-        } else {
-            print($gebruiker->getJSON());
-        }      
-        break;
-    */
+    switch ($_POST['methode']) {          
+
         case "nieuweUser":
             //print(json_encode("Nieuwe gebruiker toevoegfunctie"));
             

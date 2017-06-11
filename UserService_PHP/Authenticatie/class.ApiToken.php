@@ -20,11 +20,13 @@ Class ApiToken
 		try {
 			$pdo = new PDO("mysql:host=localhost;dbname=soa", "root", "");
 			$stmt = $pdo->prepare("select * FROM klantenbestand");
+			//hier loopen we nog de hele database, normaal moeten we toch enkel de gebruiker kunnen uithalen met een query?  $stmt = $this->pdo->prepare("select * FROM klantenbestand WHERE gebruikersnaam=" .$gebruikersnaam);  
 			$succes = $stmt->execute();
 			if ($succes) {
 				$wachtwoordIsCorrect = false;
 				while ($rij = $stmt->fetch()) {
-					if ($rij['gebruikersnaam'] == $gebruikersnaam && $rij['wachtwoord'] == $wachtwoord){
+					$storedPw = $rij['wachtwoord'];
+                	if (password_verify($wachtwoord, $storedPw)){ 
 						$wachtwoordIsCorrect = true;
 						$id = $rij['id'];
 						break;

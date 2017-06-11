@@ -24,20 +24,7 @@ class Usermanager {
      * @param string $wachtwoord
      * @return Gebruiker klasse gebruiker
      */
-    public function login($gebruikersnaam, $wachtwoord) {
-        $stmt = $this->pdo->prepare("select * FROM klantenbestand");
-        $succes = $stmt->execute();
-        $gebruiker = NULL;
-        if ($succes) {
-            while ($rij = $stmt->fetch()) {
-                if ($rij['gebruikersnaam'] == $gebruikersnaam && $rij['wachtwoord'] == $wachtwoord){
-                    $gebruiker = new Gebruiker($rij['id'], $gebruikersnaam, $rij['voornaam'], $rij['achternaam'], $rij['licentie'], $rij['locatie'], $rij['owid'], $rij['energieleverancier'],$rij['enid']);
-                }
-            }
-        } 
-        return $gebruiker;
-    }
-
+    
     public function register($email, $gebruikersnaam, $wachtwoord){        
         //return ("succes hier");
         

@@ -62,7 +62,7 @@
                 username = $("#form-username").val();
                 passwoord = $("#form-password").val();
                 //alert (username + " " + passwoord);
-                $.ajax("http://localhost/SOAproject/UserService_PHP/usermanagerREST.php",
+                $.ajax("http://localhost/SOAproject/UserService_PHP/Authenticatie/authenticatie.php",
                 {
                     data:{
                         methode: "check",
@@ -71,12 +71,15 @@
                     },
                     type: "POST",
                     success: function (data){
+                        alert(JSON.stringify(data));
+                        
                         if (typeof data.mislukt === "undefined") {
                             store.setJWT(data.jwt);
                             jsGetDataGebruiker();
                         } else {
                             alert(data.mislukt);
                         }
+                        
                     },
                     error: function(data){
                         alert("Oeps er iets iets fout gelopen");
