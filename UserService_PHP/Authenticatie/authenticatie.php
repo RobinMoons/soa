@@ -13,7 +13,7 @@ if (!isset($_GET['methode']) && !isset($_POST['methode'])) {
 }else if (isset($_POST['methode'])) {
     switch ($_POST['methode']) {
         case "check":
-            //hashen
+            //hash verify gebeurt in 'checkAuthenticatie'
             print json_encode(apiToken::checkAuthenticatie($_POST['gebruikersnaam'],$_POST['wachtwoord']));
         break;
         case "checkToken":// refrech ofzo iets

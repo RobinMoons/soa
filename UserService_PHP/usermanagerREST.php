@@ -12,6 +12,7 @@ header('Access-Control-Allow-Methods: GET, POST, OPTIONS');
 
 if (!isset($_GET['methode']) && !isset($_POST['methode'])) {
     die("No method selected");
+    
 }else if (isset($_GET['methode'])) {
     switch ($_GET['methode']) {
         case "dataGebruiker":
@@ -31,31 +32,20 @@ if (!isset($_GET['methode']) && !isset($_POST['methode'])) {
             print("no proper method selected");   
     }
 }else if (isset($_POST['methode'])) {
-    switch ($_POST['methode']) {
-        /*
-        case "check":
-            print json_encode(login::checkLogin($_POST['gebruikersnaam'],$_POST['wachtwoord']));
-        break;
-    
-    case "check":
-        $manager = new Usermanager();
-        $gebruiker = $manager->login($_POST['gebruikersnaam'],$_POST['wachtwoord']);
-        if ($gebruiker == NULL){
-            print(json_encode(["mislukt"=>"gebruikersnaam of paswoord incorrect"]));
-        } else {
-            print($gebruiker->getJSON());
-        }      
-        break;
-    */
+
+    switch ($_POST['methode']) {          
+
         case "nieuweUser":
-        $manager = new Usermanager();
-        print($manager->voegUserToe($_POST['naam'],$_POST['voornaam'],$_POST['woonplaats']));
-        break;
-        case "test":
-        print("oke");
+            //print(json_encode("Nieuwe gebruiker toevoegfunctie"));
+            
+            $manager = new Usermanager();            
+            print(json_encode($manager->register($_POST['emailadres'],$_POST['gebruikersnaam'],$_POST['wachtwoord'])));
+            
+        
         break;
         default:
-        print("no proper method selected");   
+            print(json_encode("no proper method selected"));  
+            break; 
     }
 }
 ?>

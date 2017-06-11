@@ -5,6 +5,8 @@
  * @pw_complex Gebruiker
  */
 require 'class.Gebruiker.php';
+
+
 class Usermanager {
 
     private $pdo;
@@ -22,18 +24,23 @@ class Usermanager {
      * @param string $wachtwoord
      * @return Gebruiker klasse gebruiker
      */
-    public function login($gebruikersnaam, $wachtwoord) {
-        $stmt = $this->pdo->prepare("select * FROM klantenbestand");
+    
+    public function register($email, $gebruikersnaam, $wachtwoord){        
+        //return ("succes hier");
+        
+        $stmt = $this->pdo->prepare("INSERT INTO klantenbestand(email, gebruikersnaam, wachtwoord) VALUES(:email, :gebruikersnaam, :wachtwoord);");
+        $stmt->bindParam(':email',$email);
+        $stmt->bindParam(':gebruikersnaam',$gebruikersnaam);        
+        $stmt->bindParam(':wachtwoord',password_hash($wachtwoord,PASSWORD_BCRYPT));
         $succes = $stmt->execute();
-        $gebruiker = NULL;
         if ($succes) {
-            while ($rij = $stmt->fetch()) {
-                if ($rij['gebruikersnaam'] == $gebruikersnaam && $rij['wachtwoord'] == $wachtwoord){
-                    $gebruiker = new Gebruiker($rij['id'], $gebruikersnaam, $rij['voornaam'], $rij['achternaam'], $rij['licentie'], $rij['locatie'], $rij['owid'], $rij['energieleverancier'],$rij['enid']);
-                }
-            }
-        } 
-        return $gebruiker;
+            return "gebruiker toegevoegd";
+        }         
+        else
+        {
+            return "fout opgetreden bij aanmaken gebruiker";
+        }
+        
     }
 
     public function getGebruiker($id) {
