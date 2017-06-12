@@ -12,14 +12,18 @@ if (!isset($_GET['methode']) && !isset($_POST['methode'])) {
 
 }else if (isset($_POST['methode'])) {
     switch ($_POST['methode']) {
-        case "check":
+        case "login":
             //hash verify gebeurt in 'checkAuthenticatie'
             print json_encode(apiToken::checkAuthenticatie($_POST['gebruikersnaam'],$_POST['wachtwoord']));
         break;
         case "checkToken":// refrech ofzo iets
-        	if (apiToken::checkToken($_POST['jwt'])) {
-
-        	}
+        	$check = (apiToken::checkToken($_POST['jwt']));
+            if (isset($check['data'])){
+                print json_encode(array('jwt'=> "correct"));
+        	} else {
+                print json_encode($check);
+            }
+        break;
         default:
         print("no proper method selected");   
     }

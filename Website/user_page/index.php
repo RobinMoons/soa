@@ -1,5 +1,6 @@
 <?PHP
     //checkSession function
+/*
     session_start();
         if(isset($_SESSION['gebruiker'])){        
             $idletime = 3600;
@@ -18,6 +19,7 @@
             session_destroy();
             header("Location: http://localhost/SOAproject/Website/indexREST.php");
         }
+*/
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -50,21 +52,60 @@
     
     <script type="text/javascript">
         $( function(){
-          getWeatherOw();
-          doeRequestYh();
+            checkToken();
         });
-        
-        function checkSession(){
-            $.ajax("http://localhost/SOAproject/Website/session.php",
+
+        function checkToken(){
+            $.ajax("http://localhost/SOAproject/UserService_PHP/Authenticatie/authenticatie.php",
                 {
-                   type: "POST",   
-                   data : {
-                       check: "check"
-                   }  
-                });
+                    data:{
+                        methode: "checkToken",
+                        jwt: sessionStorage.getItem('token'),
+                    },
+                    type: "POST",
+                    success: function (data){
+                        alert(JSON.stringify(data));                        
+                        if (typeof data.mislukt === "undefined") {
+                            jsGetDataGebruiker();
+                            // controleer of de gebruiker gegevens heeft
+                            getWeatherOw();
+                            //doeRequestYh();
+                            return true;
+                        } else {
+                            window.location.href ="http://localhost/SOAproject/Website/indexREST.php";
+
+                        }
+                        
+                    },
+                    error: function(data){
+                        alert("Oeps er iets iets fout gelopen");
+                    }                    
+                });              
         }
-        function getWeatherOw(){
-            var id =  "<?php echo json_decode($_SESSION['gebruiker'])->gebruiker->owid?>";
+        
+        function jsGetDataGebruiker() {
+            $.ajax("http://localhost/SOAproject/UserService_PHP/usermanagerREST.php",
+            {
+                data:{
+                    methode: "dataGebruiker",
+                    data: sessionStorage.getItem('token'),
+                },
+                type: "GET",
+                success: function (data){
+                    if (typeof data.mislukt === "undefined") {
+                        sessionStorage.setItem('gebruiker',JSON.stringify(data));                        
+                    } else {
+                        alert(data.mislukt);
+                    }
+                },
+                error: function(data){
+                    alert("Oeps er iets iets fout gelopen");
+                }                    
+            });        
+        }
+        function getWeatherOw(){ 
+            var data = JSON.parse(sessionStorage.getItem('gebruiker'))
+            var id =  data.gebruiker.owid;
             $.ajax("http://api.openweathermap.org/data/2.5/weather?id=" + id + "&units=metric&APPID=a4a530758bce79a5b8ef70c4b2a2a71b&mode=json",
             {
                 data: {
@@ -111,7 +152,7 @@
         
         function getForecastOw() {
             //checkSession();
-            var id =  "<?php echo json_decode($_SESSION['gebruiker'])->gebruiker->owid?>";
+            //var id =  "<?php //echo json_decode($_SESSION['gebruiker'])->gebruiker->owid?>";
             $.ajax("http://api.openweathermap.org/data/2.5/forecast?id=" + id + "&units=metric&APPID=a4a530758bce79a5b8ef70c4b2a2a71b&mode=json",
             {
                 data: {
@@ -157,7 +198,7 @@
         }
         
         function doeRequestYh() {   
-            var city ="<?php echo (json_decode($_SESSION['gebruiker'])->gebruiker->locatie)?>";
+            //var city ="<?php //echo (json_decode($_SESSION['gebruiker'])->gebruiker->locatie)?>";
             var countryCode = "BE";
             
             $.ajax("https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20weather.forecast%20where%20woeid%20in%20(select%20woeid%20from%20geo.places(1)%20where%20text%3D%22" + city + "%2C%20" + countryCode +"%22)&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys",
@@ -184,8 +225,8 @@
         }
         function doeRequestEs() {
             //checkSession();
-            var key ="<?php echo (json_decode($_SESSION['gebruiker'])->gebruiker->enid)?>";
-            var leverancier = "<?php echo (json_decode($_SESSION['gebruiker'])->gebruiker->energieleverancier)?>";
+            //var key ="<?php//echo (json_decode($_SESSION['gebruiker'])->gebruiker->enid)?>";
+            //var leverancier = "<?php //echo (json_decode($_SESSION['gebruiker'])->gebruiker->energieleverancier)?>";
             $.ajax("http://usermanager-167313.appspot.com/getData?&key="+ key + "&distributor=" + leverancier,
             {
                 data: {
@@ -241,7 +282,7 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12">
-                        <h1>Welkom <?php echo json_decode($_SESSION['gebruiker'])->gebruiker->voornaam?>  <?php echo json_decode($_SESSION['gebruiker'])->gebruiker->achternaam?>  </h1>    
+                        <!--<h1>Welkom <?php echo json_decode($_SESSION['gebruiker'])->gebruiker->voornaam?>  <?php echo json_decode($_SESSION['gebruiker'])->gebruiker->achternaam?>  </h1>     -->
                                                      
                         <div>       
                             <h3 id="dateTime"></h3>
