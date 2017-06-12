@@ -41,7 +41,7 @@
                 $.ajax("http://localhost/SOAproject/UserService_PHP/Authenticatie/authenticatie.php",
                 {
                     data:{
-                        methode: "check",
+                        methode: "login",
                         gebruikersnaam: username,
                         wachtwoord: passwoord
                     },

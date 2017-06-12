@@ -52,11 +52,36 @@
     
     <script type="text/javascript">
         $( function(){
-            jsGetDataGebruiker();
-            getWeatherOw();
-            //doeRequestYh();
-            
+            checkToken();
         });
+
+        function checkToken(){
+            $.ajax("http://localhost/SOAproject/UserService_PHP/Authenticatie/authenticatie.php",
+                {
+                    data:{
+                        methode: "checkToken",
+                        jwt: sessionStorage.getItem('token'),
+                    },
+                    type: "POST",
+                    success: function (data){
+                        alert(JSON.stringify(data));                        
+                        if (typeof data.mislukt === "undefined") {
+                            jsGetDataGebruiker();
+                            // controleer of de gebruiker gegevens heeft
+                            getWeatherOw();
+                            //doeRequestYh();
+                            return true;
+                        } else {
+                            window.location.href ="http://localhost/SOAproject/Website/indexREST.php";
+
+                        }
+                        
+                    },
+                    error: function(data){
+                        alert("Oeps er iets iets fout gelopen");
+                    }                    
+                });              
+        }
         
         function jsGetDataGebruiker() {
             $.ajax("http://localhost/SOAproject/UserService_PHP/usermanagerREST.php",
