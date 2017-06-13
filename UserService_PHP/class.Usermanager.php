@@ -20,11 +20,11 @@ class Usermanager {
 
     /**
      * 
+     * @param string $email
      * @param string $gebruikersnaam
      * @param string $wachtwoord
      * @return Gebruiker klasse gebruiker
      */
-    
     public function register($email, $gebruikersnaam, $wachtwoord){        
         //return ("succes hier");
         
@@ -43,17 +43,33 @@ class Usermanager {
         
     }
 
-    public function getGebruiker($id) {
-        $stmt = $this->pdo->prepare("select * FROM klantenbestand WHERE id=" .$id);
-        $succes = $stmt->execute();
-        $gebruiker = NULL;
-        if ($succes) {
-            while ($rij = $stmt->fetch()) {
-                $gebruiker = new Gebruiker($rij['id'], $rij['gebruikersnaam'], $rij['voornaam'], $rij['achternaam'], $rij['licentie'], $rij['locatie'], $rij['owid'], $rij['energieleverancier'],$rij['enid']);
+    /**
+     * 
+     * @param string $jwt
+     * @return Gebruiker klasse gebruiker
+     */
+    public function getGebruiker($jwt) {
+        try {
+            $check = (apiToken::checkToken($jwt));
+            if (isset($check['data'])){
+                $data = $check['data'];
+                $id = $data->userId;
+                $stmt = $this->pdo->prepare("select * FROM klantenbestand WHERE id=" .$id);
+                $succes = $stmt->execute();
+                if ($succes) {
+                    while ($rij = $stmt->fetch()) {
+                        $gebruiker = new Gebruiker($rij['id'], $rij['gebruikersnaam'], $rij['voornaam'], $rij['achternaam'], $rij['licentie'], $rij['locatie'], $rij['owid'], $rij['energieleverancier'],$rij['enid']);
+                    }
+                } 
+                return [$gebruiker];
+            } else {
+                return $check;
             }
+        }catch (Exception $e) {
+            return ['mislukt'=>"Connectie met de mysql server is mislukt"];
         }
-        return $gebruiker;
     }
+
 
 }
 

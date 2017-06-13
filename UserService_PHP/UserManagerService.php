@@ -6,5 +6,5 @@
  * and open the template in the editor.
  */
 require("php-wsdl-2.3.2/class.phpwsdl.php");
-PhpWsdl::RunQuickMode(array('class.Usermanager.php','class.Gebruiker.php'));
+PhpWsdl::RunQuickMode(array('class.Usermanager.php','class.Gebruiker.php','Authenticatie/class.ApiToken.php'));
 ?>

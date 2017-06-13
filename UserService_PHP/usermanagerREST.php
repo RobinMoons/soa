@@ -17,14 +17,12 @@ if (!isset($_GET['methode']) && !isset($_POST['methode'])) {
     switch ($_GET['methode']) {
         case "dataGebruiker":
                 $jwt = $_GET['data'];
-                $check = (apiToken::checkToken($jwt));
-                if (isset($check['data'])){
-                    $data = $check['data'];
-                    $manager = new Usermanager();
-                    $gebruiker = $manager->getGebruiker($data->userId);
-                    print (json_encode(array("gebruiker" => $gebruiker)));
+                $manager = new Usermanager();
+                $gebruiker = $manager->getGebruiker($jwt);
+                if (isset($gebruiker['mislukt'])) {
+                    print(json_encode($gebruiker));   
                 } else {
-                    print(json_encode($check));
+                    print (json_encode(array("gebruiker" => $gebruiker[0])));
                 }
                 
             break;
