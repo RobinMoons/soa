@@ -16,6 +16,10 @@
     function navContact(){
         window.location.href = "contact.php";
     }
+
+    function navBewerkGegevens(){
+        window.location.href = "bewerkGegevens.php";
+    }
     function logout(){            
         sessionStorage.setItem('token', "");              
         window.location.href = "http://localhost/SOAproject/Website/indexREST.php";                  
@@ -44,7 +48,7 @@
                     <a href="#" onclick="doeRequestEs()">Energy Service test</a>
                 </li>
                 <li>
-                    <a href="#">Bewerk gegevens</a>
+                    <a href="#" onclick="navBewerkGegevens()">Bewerk gegevens</a>
                 </li>
                 
                 <li>
