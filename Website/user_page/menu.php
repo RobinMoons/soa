@@ -20,6 +20,9 @@
     function navBewerkGegevens(){
         window.location.href = "bewerkGegevens.php";
     }
+    function navEnergieBronBerekening(){
+        window.location.href = "energieBronBerekening.php";
+    }
     function logout(){            
         sessionStorage.setItem('token', "");              
         window.location.href = "http://localhost/SOAproject/Website/indexREST.php";                  
@@ -45,7 +48,7 @@
                     <a href="#" onclick="navZonnewering()">Automatische zonnewering</a>
                 </li>
                 <li>
-                    <a href="#" onclick="doeRequestEs()">Energy Service test</a>
+                    <a href="#" onclick="navEnergieBronBerekening()">Energie bron berekening</a>
                 </li>
                 <li>
                     <a href="#" onclick="navBewerkGegevens()">Bewerk gegevens</a>

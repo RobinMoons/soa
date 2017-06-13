@@ -31,9 +31,9 @@
     <script type="text/javascript">
         $( function(){
             checkToken();
+            jsGetDataGebruiker();            
             getWeatherOw();
             doeRequestYh();
-            // doeRequestYh
         });
 
         function checkToken(){
@@ -58,6 +58,8 @@
         }
         
         function jsGetDataGebruiker() {
+            var data =  sessionStorage.getItem('token');
+            //alert (data);
             $.ajax("http://localhost/SOAproject/UserService_PHP/usermanagerREST.php",
             {
                 data:{
@@ -67,18 +69,21 @@
                 type: "GET",
                 success: function (data){
                     if (typeof data.mislukt === "undefined") {
+                        alert(JSON.stringify(data));
                         sessionStorage.setItem('gebruiker',JSON.stringify(data));                        
                     } else {
                         alert(data.mislukt);
                     }
                 },
+                async:false,
                 error: function(data){
                     alert("Oeps er iets iets fout gelopen");
                 }                    
             });        
         }
         function getWeatherOw(){ 
-            var data = JSON.parse(sessionStorage.getItem('gebruiker'))            
+            var data = JSON.parse(sessionStorage.getItem('gebruiker'));  
+            //alert(data);          
             var id =  data.gebruiker.owid;
             if (id === ""){                
                 document.getElementById("error").innerHTML = "Foute of onvolledige gegevens, klik <a href='bewerkGegevens.php'>hier</a> om ze bij te werken.";
