@@ -53,6 +53,9 @@
     <script type="text/javascript">
         $( function(){
             checkToken();
+            // getWeatherOw
+            // getForecastOw
+            // doeRequestYh
         });
 
         function checkToken(){
@@ -65,18 +68,11 @@
                     type: "POST",
                     success: function (data){
                         alert(JSON.stringify(data));                        
-                        if (typeof data.mislukt === "undefined") {
-                            jsGetDataGebruiker();
-                            // controleer of de gebruiker gegevens heeft
-                            getWeatherOw();
-                            //doeRequestYh();
-                            return true;
-                        } else {
+                        if (!typeof data.mislukt === "undefined") {
                             window.location.href ="http://localhost/SOAproject/Website/indexREST.php";
-
                         }
-                        
                     },
+                    async:false,
                     error: function(data){
                         alert("Oeps er iets iets fout gelopen");
                     }                    
