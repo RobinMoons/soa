@@ -1,24 +1,3 @@
-<?PHP
-    //checkSession function
-    session_start();
-        if(isset($_SESSION['gebruiker'])){        
-            $idletime = 3600;
-            if (time()-$_SESSION['timestamp'] > $idletime){            
-                session_unset(); 
-                session_destroy();
-                header("Location: http://localhost/SOAproject/Website/indexREST.php");
-            }
-            else
-            {
-                $_SESSION['timestamp'] = time(); 
-            }  
-        }   
-        else{
-            session_unset(); 
-                session_destroy();
-                header("Location: http://localhost/SOAproject/Website/indexREST.php");
-        }
-?>
 <!DOCTYPE html>
 <html lang="en">
 
