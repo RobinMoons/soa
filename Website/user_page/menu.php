@@ -16,6 +16,17 @@
     function navContact(){
         window.location.href = "contact.php";
     }
+
+    function navBewerkGegevens(){
+        window.location.href = "bewerkGegevens.php";
+    }
+    function navEnergieBronBerekening(){
+        window.location.href = "energieBronBerekening.php";
+    }
+    function logout(){            
+        sessionStorage.setItem('token', "");              
+        window.location.href = "http://localhost/SOAproject/Website/indexREST.php";                  
+    }  
 </script>
 
 
@@ -25,9 +36,7 @@
         <div id="sidebar-wrapper">
             <ul class="sidebar-nav">
                 <li class="sidebar-brand">
-                    <a href="#" onclick="logout()">
-                        Log out
-                    </a>
+                    <a href="#" onclick="logout()"> Log out</a>
                 </li>
                 <li>
                     <a href="#" onclick="navHome()">Dashboard home</a>
@@ -39,10 +48,10 @@
                     <a href="#" onclick="navZonnewering()">Automatische zonnewering</a>
                 </li>
                 <li>
-                    <a href="#" onclick="doeRequestEs()">Energy Service test</a>
+                    <a href="#" onclick="navEnergieBronBerekening()">Energie bron berekening</a>
                 </li>
                 <li>
-                    <a href="#">Bewerk gegevens</a>
+                    <a href="#" onclick="navBewerkGegevens()">Bewerk gegevens</a>
                 </li>
                 
                 <li>

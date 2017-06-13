@@ -1,26 +1,4 @@
-<?PHP
-    //checkSession function
-/*
-    session_start();
-        if(isset($_SESSION['gebruiker'])){        
-            $idletime = 3600;
-            if (time()-$_SESSION['timestamp'] > $idletime){            
-                session_unset(); 
-                session_destroy();
-                header("Location: http://localhost/SOAproject/Website/indexREST.php");
-            }
-            else
-            {
-                $_SESSION['timestamp'] = time(); 
-            }  
-        }   
-        else{
-            session_unset(); 
-            session_destroy();
-            header("Location: http://localhost/SOAproject/Website/indexREST.php");
-        }
-*/
-?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -53,9 +31,9 @@
     <script type="text/javascript">
         $( function(){
             checkToken();
-            // getWeatherOw
-            // getForecastOw
-            // doeRequestYh
+            jsGetDataGebruiker();            
+            getWeatherOw();
+            doeRequestYh();
         });
 
         function checkToken(){
@@ -67,7 +45,7 @@
                     },
                     type: "POST",
                     success: function (data){
-                        alert(JSON.stringify(data));                        
+                        //alert(JSON.stringify(data));                        
                         if (!typeof data.mislukt === "undefined") {
                             window.location.href ="http://localhost/SOAproject/Website/indexREST.php";
                         }
@@ -80,6 +58,8 @@
         }
         
         function jsGetDataGebruiker() {
+            var data =  sessionStorage.getItem('token');
+            //alert (data);
             $.ajax("http://localhost/SOAproject/UserService_PHP/usermanagerREST.php",
             {
                 data:{
@@ -89,61 +69,72 @@
                 type: "GET",
                 success: function (data){
                     if (typeof data.mislukt === "undefined") {
+                        alert(JSON.stringify(data));
                         sessionStorage.setItem('gebruiker',JSON.stringify(data));                        
                     } else {
                         alert(data.mislukt);
                     }
                 },
+                async:false,
                 error: function(data){
                     alert("Oeps er iets iets fout gelopen");
                 }                    
             });        
         }
         function getWeatherOw(){ 
-            var data = JSON.parse(sessionStorage.getItem('gebruiker'))
+            var data = JSON.parse(sessionStorage.getItem('gebruiker'));  
+            //alert(data);          
             var id =  data.gebruiker.owid;
-            $.ajax("http://api.openweathermap.org/data/2.5/weather?id=" + id + "&units=metric&APPID=a4a530758bce79a5b8ef70c4b2a2a71b&mode=json",
+            if (id === ""){                
+                document.getElementById("error").innerHTML = "Foute of onvolledige gegevens, klik <a href='bewerkGegevens.php'>hier</a> om ze bij te werken.";
+            }
+            else
             {
-                data: {
-                    format: 'json'
-                },
-                dataType: 'json',
-                success: function (data) { 
-                    sunrise = data.sys.sunrise;
-                    sunrise = new Date(sunrise*1000);
-                    //alert(sunrise);
-                    sessionStorage.setItem("Sunrise",sunrise.getHours() *60  + sunrise.getMinutes());
-                    sunset = data.sys.sunset;
-                    sunset = new Date(sunset*1000);
-                    sessionStorage.setItem("Sunset",sunset.getHours() * 60 + sunset.getMinutes());
-                    now = new Date();
-                    var prefix = 'wi wi-owm-';
-                    var code = data.weather[0].id;                   
-                    // If we are not in the ranges mentioned above, add a day/night prefix.
-                    if (!(code > 699 && code < 800) && !(code > 899 && code < 1000)) {
-                        if (now > sunrise && now < sunset ){
-                            icon = 'day-' + code;
+                $.ajax("http://api.openweathermap.org/data/2.5/weather?id=" + id + "&units=metric&APPID=a4a530758bce79a5b8ef70c4b2a2a71b&mode=json",
+                {
+                    data: {
+                        format: 'json'
+                    },
+                    dataType: 'json',
+                    success: function (data) { 
+                        sunrise = data.sys.sunrise;
+                        sunrise = new Date(sunrise*1000);
+                        //alert(sunrise);
+                        sessionStorage.setItem("Sunrise",sunrise.getHours() *60  + sunrise.getMinutes());
+                        sunset = data.sys.sunset;
+                        sunset = new Date(sunset*1000);
+                        sessionStorage.setItem("Sunset",sunset.getHours() * 60 + sunset.getMinutes());
+                        now = new Date();
+                        var prefix = 'wi wi-owm-';
+                        var code = data.weather[0].id;                   
+                        // If we are not in the ranges mentioned above, add a day/night prefix.
+                        if (!(code > 699 && code < 800) && !(code > 899 && code < 1000)) {
+                            if (now > sunrise && now < sunset ){
+                                icon = 'day-' + code;
+                            }
+                            else
+                            {
+                                icon = 'night-' + code;
+                            }                        
                         }
                         else
                         {
-                            icon = 'night-' + code;
-                        }                        
+                            icon = code;
+                        }
+                        // Finally tack on the prefix.
+                        icon = prefix + icon;   
+                        $("#icoOw").addClass(icon);
+                        $("#dateTime").text(now);
+                        
+                    },
+                    error: function (data) {
+                        alert("fout");
                     }
-                    else
-                    {
-                        icon = code;
-                    }
-                    // Finally tack on the prefix.
-                    icon = prefix + icon;   
-                    $("#icoOw").addClass(icon);
-                    $("#dateTime").text(now);
-                    
-                },
-                error: function (data) {
-                    alert("fout");
                 }
+                ); 
             }
-            );   
+            
+               
         }
         
         function getForecastOw() {
@@ -194,30 +185,40 @@
         }
         
         function doeRequestYh() {   
-            //var city ="<?php //echo (json_decode($_SESSION['gebruiker'])->gebruiker->locatie)?>";
+            var data = JSON.parse(sessionStorage.getItem('gebruiker'));
+            //alert(JSON.stringify(data));
+
+            var city =  data.gebruiker.locatie;
             var countryCode = "BE";
-            
-            $.ajax("https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20weather.forecast%20where%20woeid%20in%20(select%20woeid%20from%20geo.places(1)%20where%20text%3D%22" + city + "%2C%20" + countryCode +"%22)&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys",
-            {
-                data: {
-                    format: 'json'
-                },
-                dataType: 'json',
-                success: function (data) {
-                    //alert("gelukt");
-                    //var xmlString = (new XMLSerializer()).serializeToString(data);
-                   var jsonString = JSON.stringify(data);    
-                   var icoNow = "wi wi-yahoo-" + data.query.results.channel.item.condition.code;
-                    //$("#resultaatYh").text(jsonString);
-                    $("#icoYahoo").addClass(icoNow);
-                    //$("#preForXMLResponse").html('<pre>'+data+'</pre>');
-                   // $("#woord").html(data);
-                },
-                error: function (data) {
-                    alert("fout");
-                }
+
+            if (city === "" ){
+                document.getElementById("error").innerHTML = "Foute of onvolledige gegevens, klik <a href='bewerkGegevens.php'>hier</a> om ze bij te werken.";
             }
-            );
+            else{
+                $.ajax("https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20weather.forecast%20where%20woeid%20in%20(select%20woeid%20from%20geo.places(1)%20where%20text%3D%22" + city + "%2C%20" + countryCode +"%22)&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys",
+                {
+                    data: {
+                        format: 'json'
+                    },
+                    dataType: 'json',
+                    success: function (data) {
+                        //alert("gelukt");
+                        //var xmlString = (new XMLSerializer()).serializeToString(data);
+                       var jsonString = JSON.stringify(data);    
+                       var icoNow = "wi wi-yahoo-" + data.query.results.channel.item.condition.code;
+                        //$("#resultaatYh").text(jsonString);
+                        $("#icoYahoo").addClass(icoNow);
+                        //$("#preForXMLResponse").html('<pre>'+data+'</pre>');
+                       // $("#woord").html(data);
+                    },
+                    error: function (data) {
+                        alert("fout");
+                    }
+                }
+                );
+            }
+
+            
         }
         function doeRequestEs() {
             //checkSession();
@@ -248,18 +249,7 @@
             //checkSession();
             $("#resultaatEs").text(" ");
         }
-        function logout(){            
-            $.ajax("http://localhost/SOAproject/Website/session.php",
-            {
-               type: "POST",   
-               data : {
-                   logout: "logout"
-                },  
-               success: function(data){                   
-                   window.location.href = "index.php";
-               }
-            });        
-        }   
+         
     </script> 
     
     
@@ -279,7 +269,8 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <!--<h1>Welkom <?php echo json_decode($_SESSION['gebruiker'])->gebruiker->voornaam?>  <?php echo json_decode($_SESSION['gebruiker'])->gebruiker->achternaam?>  </h1>     -->
-                                                     
+                        <p id="error"></p>
+                                                   
                         <div>       
                             <h3 id="dateTime"></h3>
                             <h1><i id="icoOw"></i></h1>   

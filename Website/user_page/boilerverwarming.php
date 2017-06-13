@@ -1,24 +1,3 @@
-<?PHP
-    //checkSession function
-    session_start();
-        if(isset($_SESSION['gebruiker'])){        
-            $idletime = 3600;
-            if (time()-$_SESSION['timestamp'] > $idletime){            
-                session_unset(); 
-                session_destroy();
-                header("Location: http://localhost/SOAproject/Website/indexREST.php");
-            }
-            else
-            {
-                $_SESSION['timestamp'] = time(); 
-            }  
-        }   
-        else{
-            session_unset(); 
-                session_destroy();
-                header("Location: http://localhost/SOAproject/Website/indexREST.php");
-        }
-?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -211,20 +190,8 @@
                 }
             }
             );            
-        }
-      
-        function logout(){            
-            $.ajax("http://localhost/SOAproject/Website/session.php",
-            {
-               type: "POST",   
-               data : {
-                   logout: "logout"
-                },  
-               success: function(data){                   
-                   window.location.href = "index.php";
-               }
-            });        
-        }   
+        }      
+          
     </script> 
     
 </head>

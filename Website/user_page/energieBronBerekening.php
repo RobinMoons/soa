@@ -10,7 +10,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>About</title>
+    <title>Energie bron berekening</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -44,8 +44,8 @@
         <!-- Page Content -->
         <div id="page-content-wrapper">
             <div class="row">
-                <h1>About</h1>    
-                <p>Supercoole pagina waarvan de info nog ingevult moet worden.</p>
+                <h1>Energie bron berekening</h1>    
+                <p>nog te implementeren</p>
 	</div>
         </div>
         <!-- /#page-content-wrapper -->
