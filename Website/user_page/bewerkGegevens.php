@@ -70,86 +70,52 @@
         <!-- Page Content -->
         <div id="page-content-wrapper">
 
-            <div class="row">
-                <div class="col-sm-6 col-sm-offset-3 form-box">                
-                    <div class="form-top">   
-                        <div class="form-bottom">
-                            <h1 id="header">Gebruiker:</h1> 
-                            <form role="form" action="" method="post" class="persoonlijk-form">
-                                <div class="form-top-left">
-                                    <h3>Persoonlijke gegevens</h3>
-                                </div>
-                                <div class="form-top-right">
-                                    <i class="fa fa-key"></i>
-                                </div>
-                                <div class="form-group">
-                                    <p>Naam:</p>
-                                    <label class="sr-only" for="form-naam">Naam:</label>
-                                    <input type="text" name="form-naam" placeholder="Naam..." class="form-naam form-control" id="form-naam">
-                                </div>
-                                <div class="form-group">
-                                    <p>Voornaam:</p>
-                                    <label class="sr-only" for="form-voornaam">Voornaam:</label>
-                                    <input type="text" name="form-voornaam" placeholder="Voornaam..." class="form-voornaam form-control" id="form-voornaam">
-                                </div>
-                                   <p>Email:</p>
-                                    <label class="sr-only" for="form-password">E-mail:</label>
-                                    <input type="text" name="form-email" placeholder="E-mail..." class="form-email form-control" id="form-email">
-                                </div>
-                             </form>
-                             <form role="form" action="" method="post" class="weer-form">
-                                <div class="form-top-left">
-                                    <h3>Weerinformatie</h3>
-                                </div>
-                                <div class="form-top-right">
-                                    <i class="fa fa-key"></i>
-                                </div>
-                                <div class="form-group">
-                                    <p>OpenWeathermap ID:</p>
-                                    <label class="sr-only" for="form-owid">owid:</label>
-                                    <input type="text" name="form-owid" placeholder="OWID..." class="form-owid form-control" id="form-owid">
-                                </div>
-                                <div class="form-group">
-                                    <p>Locatie:</p>
-                                    <label class="sr-only" for="form-locatie">locatie:</label>
-                                    <input type="text" name="form-locatie" placeholder="Stad / dorp..." class="form-locatie form-control" id="form-locatie">
-                                </div>
-                                   <p>Landcode:</p>
-                                    <label class="sr-only" for="form-land">E-mail:</label>
-                                    <input type="text" name="form-land" placeholder="BE, NL, FR..." class="form-land form-control" id="form-land">
-                                </div>
-                             </form>
-                             <form role="form" action="" method="post" class="energie-form">
-                                <div class="form-top-left">
-                                    <h3>Energie service informatie</h3>
-                                </div>
-                                <div class="form-top-right">
-                                    <i class="fa fa-key"></i>
-                                </div>
-                                <div class="form-group">
-                                    <p>EnergieService ID:</p>
-                                    <label class="sr-only" for="form-enid">owid:</label>
-                                    <input type="text" name="form-enid" placeholder="ENID..." class="form-enid form-control" id="form-enid">
-                                </div>
-                                <div class="form-group">
-                                    <p>Stroomleverancier:</p>
-                                    <label class="sr-only" for="form-stroomlev">stroomleverancier:</label>
-                                    <input type="text" name="form-stroomlev" placeholder="Stroomleverancier..." class="form-stroomlev form-control" id="form-stroomlev">
-                                </div>
-                                   <p>Gasleverancier:</p>
-                                    <label class="sr-only" for="form-gaslev">gasleverancier:</label>
-                                    <input type="text" name="form-gaslev" placeholder="Gasleverancier..." class="form-gaslev form-control" id="form-gaslev">
-                                </div>
-                             </form>
-
-
-
-                             <button type="button" onclick="jsOpslaan();" class="btn">Opslaan!</button>
-                        </div>     
-                    </div>                    
+            <form role="form" action="" method="post" class="gegevens-form">
+                <h1 id="header">Gebruiker:</h1> 
+                <div class="form-top-left">
+                    <h3>Persoonlijke gegevens</h3>  
+                <div class="form-group">
+                    <p>Naam:</p>
+                    <label class="sr-only" for="form-naam">Naam:</label>
+                    <input type="text" name="form-naam" placeholder="Naam..." class="form-naam form-control" id="form-naam">                
+                    <p>Voornaam:</p>
+                    <label class="sr-only" for="form-voornaam">Voornaam:</label>
+                    <input type="text" name="form-voornaam" placeholder="Voornaam..." class="form-voornaam form-control" id="form-voornaam">                
+                   <p>Email:</p>
+                    <label class="sr-only" for="form-password">E-mail:</label>
+                    <input type="text" name="form-email" placeholder="E-mail..." class="form-email form-control" id="form-email">
                 </div>
-	         </div>
-        </div>
+                    <h3>Weerinformatie</h3>
+                <div class="form-group">
+                    <p>OpenWeathermap ID:</p>
+                    <label class="sr-only" for="form-owid">owid:</label>
+                    <input type="text" name="form-owid" placeholder="OWID..." class="form-owid form-control" id="form-owid">                
+                    <p>Locatie:</p>
+                    <label class="sr-only" for="form-locatie">locatie:</label>
+                    <input type="text" name="form-locatie" placeholder="Stad / dorp..." class="form-locatie form-control" id="form-locatie">
+                   <p>Landcode:</p>
+                    <label class="sr-only" for="form-land">E-mail:</label>
+                    <input type="text" name="form-land" placeholder="BE, NL, FR..." class="form-land form-control" id="form-land">
+                </div>                
+                    <h3>Energie service informatie</h3>
+                <div class="form-group">
+                    <p>EnergieService ID:</p>
+                    <label class="sr-only" for="form-enid">owid:</label>
+                    <input type="text" name="form-enid" placeholder="ENID..." class="form-enid form-control" id="form-enid">
+                    <p>Stroomleverancier:</p>
+                    <label class="sr-only" for="form-stroomlev">stroomleverancier:</label>
+                    <input type="text" name="form-stroomlev" placeholder="Stroomleverancier..." class="form-stroomlev form-control" id="form-stroomlev">              
+                   <p>Gasleverancier:</p>                   
+                    <label class="sr-only" for="form-gaslev">gasleverancier:</label>
+                    <input type="text" name="form-gaslev" placeholder="Gasleverancier..." class="form-gaslev form-control" id="form-gaslev">
+                </div>
+             </form>                         
+                
+
+             <button type="submit" class="btn">Opslaan!</button>
+        </div>     
+
+            
         <!-- /#page-content-wrapper -->
 
     </div>
