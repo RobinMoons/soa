@@ -11,8 +11,9 @@
  * @pw_element string $owid blabla
  * @pw_element string $energieleverancier blabla
  * @pw_element string $enid blabla
- * @pw_element string $lancode blbla
+ * @pw_element string $landcode blbla
  * @pw_element string $gasLeverancier
+ * @pw_element string $email
  * @pw_complex Gebruiker blabla
  */
 class Gebruiker {
@@ -62,6 +63,10 @@ class Gebruiker {
      * @var string
      */
     public $gasLeverancier;
+    /**
+     * @var string
+     */
+    public $email;
 
     /**
      * @param int $id id van gebruiker
@@ -76,7 +81,7 @@ class Gebruiker {
      * @param string $landcode Description
      * @param string $gasLeverancier Description
      */
-    function __construct($id,$gebruikersnaam,$voornaam,$achternaam,$licentie,$locatie,$owid,$energieleverancier,$enid,$landcode,$gasLeverancier) {
+    function __construct($id,$gebruikersnaam,$voornaam,$achternaam,$licentie,$locatie,$owid,$energieleverancier,$enid,$landcode,$gasLeverancier,$email) {
         $this->id = $id;
         $this->gebruikersnaam = $gebruikersnaam;
         $this->voornaam = $voornaam;
@@ -88,6 +93,7 @@ class Gebruiker {
         $this->enid = $enid;
         $this->landcode = $landcode;
         $this->gasLeverancier = $gasLeverancier;
+        $this->email = $email;
     }
     
     /*

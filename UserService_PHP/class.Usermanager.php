@@ -1,7 +1,18 @@
 <?php
 /**
  * blabla
- * 
+ * @pw_element int $id blabla
+ * @pw_element string $gebruikersnaam blabla
+ * @pw_element string $voornaam blabla
+ * @pw_element string $achternaam blabla
+ * @pw_element string $licentie blabla
+ * @pw_element string $locatie blabla
+ * @pw_element string $owid blabla
+ * @pw_element string $energieleverancier blabla
+ * @pw_element string $enid blabla
+ * @pw_element string $landcode blbla
+ * @pw_element string $gasLeverancier
+ * @pw_element string $email
  * @pw_complex Gebruiker
  */
 require 'class.Gebruiker.php';
@@ -58,7 +69,7 @@ class Usermanager {
                 $succes = $stmt->execute();
                 if ($succes) {
                     while ($rij = $stmt->fetch()) {
-                        $gebruiker = new Gebruiker($rij['id'], $rij['gebruikersnaam'], $rij['voornaam'], $rij['achternaam'], $rij['licentie'], $rij['locatie'], $rij['owid'], $rij['energieleverancier'],$rij['enid']);
+                        $gebruiker = new Gebruiker($rij['id'], $rij['gebruikersnaam'], $rij['voornaam'], $rij['achternaam'], $rij['licentie'], $rij['locatie'], $rij['owid'], $rij['energieleverancier'],$rij['enid'],$rij['landcode'],$rij['gasLeverancier'],$rij['email']);
                     }
                 } 
                 return [$gebruiker];
@@ -69,33 +80,19 @@ class Usermanager {
             return ['mislukt'=>"Connectie met de mysql server is mislukt"];
         }
     }
-
-         /*
-     * @param string $achternaam 
-     * @param string $voornaam
-     * @param string $mail
-     * @param string $owid
-     * @param string $locatie
-     * @param string $landcode
-     * @param string $enid
-     * @param string $energieLeverancier
-     * @param string $gasLeverancier
-     * @return array 
-     */ 
-
     /**
      *
      * @param string $jwt de apitoken als verificatie
      * @param Gebruiker $gebruiker
-     * @return boolean true als het lukt , false als het mislukt
+     * @return string true als het lukt , false als het mislukt
      */  
     public function updateGebruiker($jwt,$gebruiker) {
         try {
-            $check = apiToken::checkToken($jwt));
+            $check = apiToken::checkToken($jwt);
             if (isset($check['data'])){
                 $data = $check['data'];
                 $id = $data->userId;
-                $stmt = $this->pdo->prepare("UPDATA klantenbestand SET email = :email , voornaam = :vn , achternaam = :an , locatie = :loc , owid = :owid , energieleverancier = :el , enid = :enid , landcode = :lc , gasLeverancier = :gl");
+                $stmt = $this->pdo->prepare("UPDATE klantenbestand SET email = :email , voornaam = :vn , achternaam = :an , locatie = :loc , owid = :owid , energieleverancier = :el , enid = :enid , landcode = :lc , gasLeverancier = :gl WHERE id = ".$id);
                 $stmt->bindParam(':email',$gebruiker->email);
                 $stmt->bindParam(':vn',$gebruiker->voornaam);
                 $stmt->bindParam(':an',$gebruiker->achternaam);
