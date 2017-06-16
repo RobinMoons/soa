@@ -70,6 +70,49 @@ class Usermanager {
         }
     }
 
+         /*
+     * @param string $achternaam 
+     * @param string $voornaam
+     * @param string $mail
+     * @param string $owid
+     * @param string $locatie
+     * @param string $landcode
+     * @param string $enid
+     * @param string $energieLeverancier
+     * @param string $gasLeverancier
+     * @return array 
+     */ 
+
+    /**
+     *
+     * @param string $jwt de apitoken als verificatie
+     * @param Gebruiker $gebruiker
+     * @return boolean true als het lukt , false als het mislukt
+     */  
+    public function updateGebruiker($jwt,$gebruiker) {
+        try {
+            $check = apiToken::checkToken($jwt));
+            if (isset($check['data'])){
+                $data = $check['data'];
+                $id = $data->userId;
+                $stmt = $this->pdo->prepare("UPDATA klantenbestand SET email = :email , voornaam = :vn , achternaam = :an , locatie = :loc , owid = :owid , energieleverancier = :el , enid = :enid , landcode = :lc , gasLeverancier = :gl");
+                $stmt->bindParam(':email',$gebruiker->email);
+                $stmt->bindParam(':vn',$gebruiker->voornaam);
+                $stmt->bindParam(':an',$gebruiker->achternaam);
+                $stmt->bindParam(':loc',$gebruiker->locatie);
+                $stmt->bindParam(':owid',$gebruiker->owid);
+                $stmt->bindParam(':el',$gebuiker->energieleverancier);
+                $stmt->bindParam(':enid',$gebruiker->enid);
+                $stmt->bindParam(':lc',$gebuiker->landcode);
+                $stmt->bindParam(':gl',$gebruiker->gasLeverancier);
+                $succes = $stmt->execute();
+                return $succes;
+            }
+        }catch (Exception $e) {
+            return false;
+        }
+    }
+
 
 }
 
