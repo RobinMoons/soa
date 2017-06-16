@@ -119,9 +119,6 @@
                 }                
                 cloudArray.addRow([strTimeStamp,       rateBewolking]  );
                 
-                
-                
-                
             }
             
             //create the options
@@ -157,16 +154,7 @@
     
           }
     
-        function checkSession(){
-            $.ajax("http://localhost/SOAproject/Website/session.php",
-                {
-                   type: "POST",   
-                   data : {
-                       check: "check"
-                   }  
-                });
-        }
-       
+             
         function calculate() {
             //checkSession();            
             var id =  "<?php echo json_decode($_SESSION['gebruiker'])->gebruiker->owid?>";

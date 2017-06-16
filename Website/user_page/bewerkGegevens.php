@@ -1,4 +1,5 @@
 
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -30,26 +31,103 @@
     
     <script type="text/javascript">             
         $( function(){
+            checkToken();  
+            jsGetDataGebruiker();
              //on load function
-            var data = JSON.parse(sessionStorage.getItem('gebruiker'))            
+            var data = JSON.parse(sessionStorage.getItem('gebruiker')) 
             var gebruikersnaam =  data.gebruiker.gebruikersnaam;            
             var voornaam =  data.gebruiker.voornaam;
             var achternaam =  data.gebruiker.achternaam;
-           //var email = data.gebruiker.email; //nog implementeren
+            var email = data.gebruiker.email; //nog implementeren
             var licentie =  data.gebruiker.licentie;
             var locatie =  data.gebruiker.locatie;
+            var landcode = data.gebruiker.landcode;
             var owid =  data.gebruiker.owid;
             var energieleverancier =  data.gebruiker.energieleverancier;
             var enid =  data.gebruiker.enid;
-            document.getElementById("header").innerHTML = "Gebruiker: " + gebruikersnaam;
-            document.getElementById("form-naam").value = achternaam;
-            document.getElementById("form-voornaam").value = voornaam;
-            document.getElementById("form-email").value = email;
-            document.getElementById("form-locatie").value = locatie;
-            document.getElementById("form-owid").value = owid;
-            document.getElementById("form-energielev").value = energieleverancier;
-            document.getElementById("form-enid").value = enid;
+            var gasleverancier = data.gebruiker.gasleverancier;
+
+            if (gebruikersnaam != null){
+                document.getElementById("header").innerHTML = "Gebruiker: " + gebruikersnaam;
+            }            
+            if (voornaam != null){
+                document.getElementById("form-voornaam").value = voornaam;
+            }
+            if (achternaam != null){
+                document.getElementById("form-naam").value = achternaam;
+            }
+            if (email != null){
+                document.getElementById("form-email").value = email;
+            }
+            if (owid != null){
+                document.getElementById("form-owid").value = owid;
+            }
+            if (locatie != null){
+                document.getElementById("form-locatie").value = locatie;
+            }
+            if (landcode != null){
+                document.getElementById("form-land").value = landcode;
+            }
+            if (enid != null){
+                document.getElementById("form-enid").value = enid;
+            }
+            if (energieleverancier != null){
+                document.getElementById("form-stroomlev").value = energieleverancier;
+            }
+            if (gasleverancier != null){
+                document.getElementById("form-gaslev").value = gasleverancier;
+            }
+
+
         });
+
+        function jsGetDataGebruiker() {
+            var data =  sessionStorage.getItem('token');
+            //alert (data);
+            $.ajax("http://localhost/SOAproject/UserService_PHP/usermanagerREST.php",
+            {
+                data:{
+                    methode: "dataGebruiker",
+                    data: sessionStorage.getItem('token'),
+                },
+                type: "GET",
+                success: function (data){
+                    if (typeof data.mislukt === "undefined") {
+                        sessionStorage.setItem('gebruiker',JSON.stringify(data));                        
+                    } else {
+                        alert(data.mislukt);
+                    }
+                },
+                async:false,
+                error: function(data){
+                    alert("Oeps er iets iets fout gelopen");
+                }                    
+            });        
+        }
+
+        function checkToken(){
+            $.ajax("http://localhost/SOAproject/UserService_PHP/Authenticatie/authenticatie.php",
+                {
+                    data:{
+                        methode: "checkToken",
+                        jwt: sessionStorage.getItem('token'),
+                    },
+                    type: "POST",
+                    success: function (data){
+                        //alert(JSON.stringify(data));                        
+                        if (!typeof data.mislukt === "undefined") {
+                            window.location.href ="http://localhost/SOAproject/Website/indexREST.php";
+                        }
+                        else{
+                            document.getElementById("token").value = sessionStorage.getItem('token')
+                        }
+                    },
+                    async:false,
+                    error: function(data){
+                        alert("Oeps er iets iets fout gelopen");
+                    }                    
+                });              
+        }
 
         function jsOpslaan(){
             //$.ajax("SOAP POST VAN DE GEGEVENS")
@@ -70,20 +148,20 @@
         <!-- Page Content -->
         <div id="page-content-wrapper">
 
-            <form role="form" action="" method="post" class="gegevens-form">
+            <form role="form" action="sendGegevens.php" method="post" class="gegevens-form">
                 <h1 id="header">Gebruiker:</h1> 
                 <div class="form-top-left">
                     <h3>Persoonlijke gegevens</h3>  
                 <div class="form-group">
                     <p>Naam:</p>
                     <label class="sr-only" for="form-naam">Naam:</label>
-                    <input type="text" name="form-naam" placeholder="Naam..." class="form-naam form-control" id="form-naam">                
+                    <input type="text" name="form-naam" placeholder="Naam..." class="form-naam form-control" id="form-naam" required>                
                     <p>Voornaam:</p>
                     <label class="sr-only" for="form-voornaam">Voornaam:</label>
-                    <input type="text" name="form-voornaam" placeholder="Voornaam..." class="form-voornaam form-control" id="form-voornaam">                
+                    <input type="text" name="form-voornaam" placeholder="Voornaam..." class="form-voornaam form-control" id="form-voornaam" required>                
                    <p>Email:</p>
                     <label class="sr-only" for="form-password">E-mail:</label>
-                    <input type="text" name="form-email" placeholder="E-mail..." class="form-email form-control" id="form-email">
+                    <input type="text" name="form-email" placeholder="E-mail..." class="form-email form-control" id="form-email" required>
                 </div>
                     <h3>Weerinformatie</h3>
                 <div class="form-group">
@@ -109,9 +187,8 @@
                     <label class="sr-only" for="form-gaslev">gasleverancier:</label>
                     <input type="text" name="form-gaslev" placeholder="Gasleverancier..." class="form-gaslev form-control" id="form-gaslev">
                 </div>
-             </form>                         
-                
-
+                <input type="hidden" name="token" id="token">
+             </form>               
              <button type="submit" class="btn">Opslaan!</button>
         </div>     
 
