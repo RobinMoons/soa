@@ -33,14 +33,12 @@ if (!isset($_GET['methode']) && !isset($_POST['methode'])) {
 
     switch ($_POST['methode']) {          
 
-        case "nieuweUser":
+        case 'nieuweUser':
             //print(json_encode("Nieuwe gebruiker toevoegfunctie"));
             
             $manager = new Usermanager();            
             print(json_encode($manager->register($_POST['emailadres'],$_POST['gebruikersnaam'],$_POST['wachtwoord'])));
-            
-        
-        break;
+            break;
         default:
             print(json_encode("no proper method selected"));  
             break; 
