@@ -54,8 +54,8 @@ public class DataStoreServlet_getData extends HttpServlet {
                 JSONObject user = new JSONObject();
                 try {
                     user.put("Name",gebruiker.getProperty("name"));
-                    user.put("First name", gebruiker.getProperty("firstName"));
-                    user.put("Acces rights", acces);
+                    user.put("First_name", gebruiker.getProperty("firstName"));
+                    user.put("Acces_rights", acces);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -79,8 +79,8 @@ public class DataStoreServlet_getData extends HttpServlet {
                                 dist.put("Dagtarief",dag);
                                 dist.put("Nachttarief", nacht);
                                 dist.put("Groenkost", groen);
-                                dist.put("Normaal tarief", normaal);
-                                json.put("Distributor info", dist);
+                                dist.put("Normaal_tarief", normaal);
+                                json.put("Distributor_info", dist);
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
@@ -88,7 +88,7 @@ public class DataStoreServlet_getData extends HttpServlet {
                         else{
                             try {
                                 json.put("message","Distributor not found");
-                                json.put("User info", user);
+                                json.put("User_info", user);
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
@@ -120,7 +120,7 @@ public class DataStoreServlet_getData extends HttpServlet {
                 else {
                     try {
                         json.put("message","Acces denied");
-                        json.put("User info", user);
+                        json.put("User_info", user);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -173,7 +173,7 @@ public class DataStoreServlet_getData extends HttpServlet {
             methods.put("POST",postmethod);
             JSONObject getmethod = new JSONObject();
             getmethod.put("parameters", "ref. POST");
-            getmethod.put("Example URL", "http://usermanager-167313.appspot.com/getData?&key=API_KEY&distributor=DistributorName");
+            getmethod.put("Example_URL", "http://usermanager-167313.appspot.com/getData?&key=API_KEY&distributor=DistributorName");
             methods.put("GET", getmethod);
             methods.put("OPTIONS", "info page");
         } catch (JSONException e) {

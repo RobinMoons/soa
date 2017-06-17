@@ -60,7 +60,7 @@ public class DataStoreServlet_create extends HttpServlet {
                     _user.put("Name",pName);
                     _user.put("Acces-type",pRights);
                     _user.put("Key", id);
-                    json.put("User info", _user);
+                    json.put("User_info", _user);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -79,8 +79,8 @@ public class DataStoreServlet_create extends HttpServlet {
                     JSONObject user = new JSONObject();
                     try {
                         user.put("Name",gebruiker.getProperty("name"));
-                        user.put("First name", gebruiker.getProperty("firstName"));
-                        user.put("Acces rights", acces);
+                        user.put("First_name", gebruiker.getProperty("firstName"));
+                        user.put("Acces_rights", acces);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -138,7 +138,7 @@ public class DataStoreServlet_create extends HttpServlet {
                     else {
                         try {
                             json.put("message","Acces denied");
-                            json.put("User info", user);
+                            json.put("User_info", user);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -214,7 +214,7 @@ public class DataStoreServlet_create extends HttpServlet {
             methods.put("POST",postmethod);
             JSONObject getmethod = new JSONObject();
             getmethod.put("parameters", "ref. POST");
-            getmethod.put("Example URL", "http://usermanager-167313.appspot.com/create?key=API_KEY&name=DistributorName&normal=0.01&day=0.02&night=0.03&green=0.04");
+            getmethod.put("Example_URL", "http://usermanager-167313.appspot.com/create?key=API_KEY&name=DistributorName&normal=0.01&day=0.02&night=0.03&green=0.04");
             methods.put("GET", getmethod);
             methods.put("OPTIONS", "info page");
         } catch (JSONException e) {
