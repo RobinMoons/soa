@@ -60,7 +60,7 @@ class GasLeverancier {
 
 	/**
 	 * @param int $id het id nummer van de gasLeverancier
-	 * @return array deze array bevat per uur de gasprijs per m3
+	 * @return array deze array bevat per uur de gasprijs per kwh
 	 */
 	function getGasprijzen($id){
 		$stmt = $this->pdo->prepare("select prijsHoog , uurHoog , prijsLaag , uurLaag FROM gasLeveranciers WHERE id = :id");
