@@ -28,8 +28,60 @@
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript" src="jquery-3.2.1.min.js"></script> 
     
-    <script type="text/javascript">             
-        
+    <script type="text/javascript">        
+        $( function(){
+           callBestEnergySource();
+        });     
+
+        function draw(v){
+           google.charts.load('current', {'packages':['corechart']});
+           google.charts.setOnLoadCallback(drawChart);      
+           jsonData = v;           
+        }
+
+        function drawChart(){
+            var sourceArray = new google.visualization.DataTable();
+            sourceArray.addColumn('string', 'Time');    
+            sourceArray.addColumn('number', 'energiebron');    
+            sourceArray.addColumn({type:'string', role: 'annotation' });   
+            sourceArray.addColumn({type:'string', role: 'style' });
+        }
+
+        /*
+        for (i = 0; i < jsonData.list.length; i++){
+                var dateTime = jsonData.list[i].dt;
+                dateTime = new Date(dateTime*1000);
+                hours = dateTime.getHours();
+                minutes = dateTime.getMinutes();
+                strTimeStamp = String(dateTime);
+                strTimeStamp = strTimeStamp.substring(4,10) + " " + strTimeStamp.substring(16,21);
+                time = hours  * 60 + minutes;
+
+
+        }
+        */
+
+        function callBestEnergySource() {
+            var data = JSON.parse(sessionStorage.getItem('gebruiker')) ;
+            var energieleverancier = data.gebruiker.energieleverancier;
+            var gasleverancier = data.gebruiker.gasLeverancier;  
+            $.ajax("http://localhost/SOAproject/EnergieBronBepaler/EnergieBronBepalerRest.php?methode=call&gasleverancier=" + gasleverancier + "&energieleverancier=" + energieleverancier,
+            {
+                data: {
+                    format: 'json'
+                },
+                dataType: 'json',
+                success: function (data) {
+                    var jsonString = JSON.stringify(data);
+                    alert(jsonString);
+                    draw(data);
+                },
+                error: function (data) {
+                    alert("fout");
+                }
+            }
+            ); 
+        }
         
     </script> 
     
@@ -45,7 +97,7 @@
         <div id="page-content-wrapper">
             <div class="row">
                 <h1>Energie bron berekening</h1>    
-                <p>nog te implementeren</p>
+                <p>Op onderstaande grafiek is te zien welke energie bron het rendabelste is.</p>
 	</div>
         </div>
         <!-- /#page-content-wrapper -->

@@ -41,8 +41,8 @@
                 dataType: 'json',
                 success: function (data) {
                     var jsonString = JSON.stringify(data);   
-                    nachttarief = data["Distributor info"].Nachttarief;
-                    dagtarief = data["Distributor info"].Dagtarief;
+                    nachttarief = data["Distributor_info"].Nachttarief;
+                    dagtarief = data["Distributor_info"].Dagtarief;
                 },
                 error: function (data) {
                     alert("fout");

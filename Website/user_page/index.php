@@ -149,11 +149,7 @@
                 },
                 dataType: 'json',
                 success: function (data) {
-                    //alert("gelukt");
-                    //var xmlString = (new XMLSerializer()).serializeToString(data);
                     var jsonString = JSON.stringify(data);
-                    //console.log(data);
-                    //$("#resultaatOw").text(xmlString);
                     var prefix = 'wi wi-owm-';
                     var code = data.list[0].weather[0].id;                   
                     // If we are not in the ranges mentioned above, add a day/night prefix.
