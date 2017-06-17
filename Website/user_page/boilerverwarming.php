@@ -43,7 +43,6 @@
                     var jsonString = JSON.stringify(data);   
                     nachttarief = data["Distributor info"].Nachttarief;
                     dagtarief = data["Distributor info"].Dagtarief;
-                    alert(jsonString);
                 },
                 error: function (data) {
                     alert("fout");

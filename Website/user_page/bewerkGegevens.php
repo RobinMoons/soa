@@ -34,8 +34,7 @@
             checkToken();  
             jsGetDataGebruiker();
              //on load function
-            var data = JSON.parse(sessionStorage.getItem('gebruiker')) 
-            alert(JSON.stringify(data));
+            var data = JSON.parse(sessionStorage.getItem('gebruiker')) ;
             var gebruikersnaam =  data.gebruiker.gebruikersnaam;            
             var voornaam =  data.gebruiker.voornaam;
             var achternaam =  data.gebruiker.achternaam;
