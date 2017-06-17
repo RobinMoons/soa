@@ -35,6 +35,7 @@
             jsGetDataGebruiker();
              //on load function
             var data = JSON.parse(sessionStorage.getItem('gebruiker')) 
+            alert(JSON.stringify(data));
             var gebruikersnaam =  data.gebruiker.gebruikersnaam;            
             var voornaam =  data.gebruiker.voornaam;
             var achternaam =  data.gebruiker.achternaam;
@@ -82,8 +83,7 @@
         });
 
         function jsGetDataGebruiker() {
-            var data =  sessionStorage.getItem('token');
-            //alert (data);
+            var data =  sessionStorage.getItem('token');            
             $.ajax("http://localhost/SOAproject/UserService_PHP/usermanagerREST.php",
             {
                 data:{
@@ -172,7 +172,7 @@
                     <label class="sr-only" for="form-locatie">locatie:</label>
                     <input type="text" name="form-locatie" placeholder="Stad / dorp..." class="form-locatie form-control" id="form-locatie">
                    <p>Landcode:</p>
-                    <label class="sr-only" for="form-land">E-mail:</label>
+                    <label class="sr-only" for="form-land">Landcode:</label>
                     <input type="text" name="form-land" placeholder="BE, NL, FR..." class="form-land form-control" id="form-land">
                 </div>                
                     <h3>Energie service informatie</h3>

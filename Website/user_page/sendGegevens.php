@@ -9,7 +9,7 @@
             'email' => $_POST['form-email'],
             'licentie' => 'n y i',
             'locatie' => $_POST['form-locatie'],
-            'landcode' => $_POST['form-land'],
+            'landcode' => 'YOLO',
             'owid' => $_POST['form-owid'],
             'energieLeverancier' => $_POST['form-stroomlev'],
             'enid' => $_POST['form-enid'],

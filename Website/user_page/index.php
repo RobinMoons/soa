@@ -50,7 +50,7 @@
                 type: "GET",
                 success: function (data){
                     if (typeof data.mislukt === "undefined") {
-                        alert(JSON.stringify(data));
+                        //alert(JSON.stringify(data));
                         sessionStorage.setItem('gebruiker',JSON.stringify(data));                        
                     } else {
                         alert(data.mislukt);
