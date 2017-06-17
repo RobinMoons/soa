@@ -72,9 +72,14 @@
                     type: "POST",
                     success: function (data){
                         //alert(JSON.stringify(data));                        
-                        if (!typeof data.mislukt === "undefined") {
+                        if (data.message === "gelukt") {
+                            
+                        }    
+                        else{
                             window.location.href ="http://localhost/SOAproject/Website/indexREST.php";
-                        }                        
+                            sessionStorage.setItem('gebruiker',null); 
+                            sessionStorage.setItem('token',null); 
+                        }                    
                     },
                     async:false,
                     error: function(data){

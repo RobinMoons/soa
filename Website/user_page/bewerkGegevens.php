@@ -92,9 +92,9 @@
                 type: "GET",
                 success: function (data){
                     if (typeof data.mislukt === "undefined") {
-                        sessionStorage.setItem('gebruiker',JSON.stringify(data));                        
+                        alert(data.mislukt);                      
                     } else {
-                        alert(data.mislukt);
+                        sessionStorage.setItem('gebruiker',JSON.stringify(data));                          
                     }
                 },
                 async:false,
@@ -112,14 +112,15 @@
                         jwt: sessionStorage.getItem('token'),
                     },
                     type: "POST",
-                    success: function (data){
-                        //alert(JSON.stringify(data));                        
-                        if (!typeof data.mislukt === "undefined") {
-                            window.location.href ="http://localhost/SOAproject/Website/indexREST.php";
-                        }
+                    success: function (data){                        
+                        if (data.message === "gelukt") {
+                            document.getElementById("token").value = sessionStorage.getItem('token');
+                        }    
                         else{
-                            document.getElementById("token").value = sessionStorage.getItem('token')
-                        }
+                            window.location.href ="http://localhost/SOAproject/Website/indexREST.php";
+                            sessionStorage.setItem('gebruiker',null); 
+                            sessionStorage.setItem('token',null); 
+                        }                    
                     },
                     async:false,
                     error: function(data){
@@ -128,11 +129,7 @@
                 });              
         }
 
-        function jsOpslaan(){
-            //$.ajax("SOAP POST VAN DE GEGEVENS")
-            alert("SOAP post implementeren");
-        }
-
+       
         
     </script> 
     
