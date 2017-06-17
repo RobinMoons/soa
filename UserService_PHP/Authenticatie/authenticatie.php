@@ -19,7 +19,7 @@ if (!isset($_GET['methode']) && !isset($_POST['methode'])) {
         case "checkToken":// refrech ofzo iets
         	$check = (apiToken::checkToken($_POST['jwt']));
             if (isset($check['data'])){
-                print json_encode(array('jwt'=> "correct"));
+                print json_encode(array('message'=> "gelukt"));
         	} else {
                 print json_encode($check);
             }
