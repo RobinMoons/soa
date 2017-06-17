@@ -30,8 +30,9 @@
     <script type="text/javascript">
         
         $( function(){
-           key ="<?php echo (json_decode($_SESSION['gebruiker'])->gebruiker->enid)?>";
-           leverancier = "<?php echo (json_decode($_SESSION['gebruiker'])->gebruiker->energieleverancier)?>";
+            var data = JSON.parse(sessionStorage.getItem('gebruiker')) ;
+           key = data.gebruiker.enid;
+           leverancier = data.gebruiker.energieleverancier;
            $.ajax("http://usermanager-167313.appspot.com/getData?&key="+ key + "&distributor=" + leverancier,
             {
                 data: {
@@ -42,7 +43,7 @@
                     var jsonString = JSON.stringify(data);   
                     nachttarief = data["Distributor info"].Nachttarief;
                     dagtarief = data["Distributor info"].Dagtarief;
-                    //alert(dagtarief + " " + nachttarief);
+                    alert(jsonString);
                 },
                 error: function (data) {
                     alert("fout");
@@ -156,8 +157,9 @@
     
              
         function calculate() {
-            //checkSession();            
-            var id =  "<?php echo json_decode($_SESSION['gebruiker'])->gebruiker->owid?>";
+            //checkSession();      
+            var data = JSON.parse(sessionStorage.getItem('gebruiker')) ;
+            var id = data.gebruiker.owid;                  
             $.ajax("http://api.openweathermap.org/data/2.5/forecast?id=" + id + "&units=metric&APPID=a4a530758bce79a5b8ef70c4b2a2a71b&mode=json",
             {
                 data: {
