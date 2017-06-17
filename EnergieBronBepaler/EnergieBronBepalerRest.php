@@ -126,6 +126,4 @@ if (!isset($_GET['methode']) && !isset($_POST['methode'])) {
 		return $tempverschil*1.2;
 	}
 
-    
-  
 ?>

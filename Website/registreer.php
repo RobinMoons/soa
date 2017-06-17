@@ -58,17 +58,10 @@
                             },
                             type: "POST",
                             success: function (data){
-                                alert(data);
-                                /*
-                                if (typeof data.mislukt === "undefined") {
-                                    
-                                } else {
-                                    alert(data.mislukt);
-                                }
-                                */
+                                //alert(data);                                
                             },
                             error: function(data){
-                                alert(JSON.stringify(data));
+                               // alert(JSON.stringify(data));
                             }                    
                         });       
                     }

@@ -37,7 +37,6 @@
             function jsLogin(){                
                 username = $("#form-username").val();
                 passwoord = $("#form-password").val();
-                //alert (username + " " + passwoord);
                 $.ajax("http://localhost/SOAproject/UserService_PHP/Authenticatie/authenticatie.php",
                 {
                     data:{
@@ -46,8 +45,7 @@
                         wachtwoord: passwoord
                     },
                     type: "POST",
-                    success: function (data){
-                        //alert(JSON.stringify(data));                        
+                    success: function (data){                    
                         if (typeof data.mislukt === "undefined") {
                             sessionStorage.setItem('token',data.jwt);
                             window.location.href = "user_page/index.php";
@@ -59,10 +57,7 @@
                     error: function(data){
                         alert("Oeps er iets iets fout gelopen");
                     }                    
-                });              
-                
-                //window.location.href = "/user_page/index.html";
-                //alert("klikked");
+                }); 
             }
             function startSession(user){
                 $.ajax("http://localhost/SOAproject/Website/session.php",
@@ -71,8 +66,7 @@
                    data : {
                        gebruiker: user
                    },                                    
-                   success: function(data){            
-                        //alert(data);
+                   success: function(data){    
                         var w = window.location.href = "user_page/index.php";
                         var token = {JWT : store.JWT};
                         w.myVariable  = token;
@@ -87,8 +81,6 @@
     </head>
 
     <body>
-
-        <!-- Top content -->
         <div class="top-content">
         	
             <div class="inner-bg">
@@ -101,8 +93,7 @@
                             <h2>Kobe Bamps & Robin Moons</h2>
                             <div class="description">
                             	<p>
-	                            	<!--voorlopig leeg -->
-                                        
+
                             	</p>
                             </div>
                         </div>
@@ -135,8 +126,7 @@
 			                    </form>
 		                    </div>
                         </div>
-                    </div>
-                    
+                    </div>                    
                 </div>
             </div>
             

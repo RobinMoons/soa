@@ -36,7 +36,7 @@ Class ApiToken
 				if ($wachtwoordIsCorrect) {
 					$tokenId    = base64_encode(mcrypt_create_iv(32));
 					$tijd   = time();            
-					$vervallen     = $tijd + 600;          				  
+					$vervallen     = $tijd + 300;          				  
 
 
 					$data = [
