@@ -47,19 +47,16 @@
             sourceArray.addColumn({type:'string', role: 'style' });
         }
 
-        /*
-        for (i = 0; i < jsonData.list.length; i++){
-                var dateTime = jsonData.list[i].dt;
-                dateTime = new Date(dateTime*1000);
-                hours = dateTime.getHours();
-                minutes = dateTime.getMinutes();
+        
+        for (i = 0; i < jsonData.length; i++){
+                var dateTime = jsonData[i].timestamp;
+                var result = jsonData[i].result;
                 strTimeStamp = String(dateTime);
                 strTimeStamp = strTimeStamp.substring(4,10) + " " + strTimeStamp.substring(16,21);
-                time = hours  * 60 + minutes;
 
 
         }
-        */
+        
 
         function callBestEnergySource() {
             var data = JSON.parse(sessionStorage.getItem('gebruiker')) ;
