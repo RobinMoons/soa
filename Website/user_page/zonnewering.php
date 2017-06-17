@@ -125,19 +125,10 @@
             screensChart.draw(screensArray, screensOptions);  
           }
     
-        function checkSession(){
-            $.ajax("http://localhost/SOAproject/Website/session.php",
-                {
-                   type: "POST",   
-                   data : {
-                       check: "check"
-                   }  
-                });
-        }
-       
-        function calculate() {
-            //checkSession();            
-            var id =  "<?php echo json_decode($_SESSION['gebruiker'])->gebruiker->owid?>";
+        
+        function calculate() {        
+           var data = JSON.parse(sessionStorage.getItem('gebruiker')) ;
+            var id = data.gebruiker.owid;  
             $.ajax("http://api.openweathermap.org/data/2.5/forecast?id=" + id + "&units=metric&APPID=a4a530758bce79a5b8ef70c4b2a2a71b&mode=json",
             {
                 data: {

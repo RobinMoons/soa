@@ -36,26 +36,7 @@
             doeRequestYh();
         });
 
-        function checkToken(){
-            $.ajax("http://localhost/SOAproject/UserService_PHP/Authenticatie/authenticatie.php",
-                {
-                    data:{
-                        methode: "checkToken",
-                        jwt: sessionStorage.getItem('token'),
-                    },
-                    type: "POST",
-                    success: function (data){
-                        //alert(JSON.stringify(data));                        
-                        if (!typeof data.mislukt === "undefined") {
-                            window.location.href ="http://localhost/SOAproject/Website/indexREST.php";
-                        }
-                    },
-                    async:false,
-                    error: function(data){
-                        alert("Oeps er iets iets fout gelopen");
-                    }                    
-                });              
-        }
+        
         
         function jsGetDataGebruiker() {
             var data =  sessionStorage.getItem('token');
@@ -69,7 +50,7 @@
                 type: "GET",
                 success: function (data){
                     if (typeof data.mislukt === "undefined") {
-                        alert(JSON.stringify(data));
+                        //alert(JSON.stringify(data));
                         sessionStorage.setItem('gebruiker',JSON.stringify(data));                        
                     } else {
                         alert(data.mislukt);
@@ -81,6 +62,27 @@
                 }                    
             });        
         }
+        function checkToken(){
+            $.ajax("http://localhost/SOAproject/UserService_PHP/Authenticatie/authenticatie.php",
+                {
+                    data:{
+                        methode: "checkToken",
+                        jwt: sessionStorage.getItem('token'),
+                    },
+                    type: "POST",
+                    success: function (data){
+                        //alert(JSON.stringify(data));                        
+                        if (!typeof data.mislukt === "undefined") {
+                            window.location.href ="http://localhost/SOAproject/Website/indexREST.php";
+                        }                        
+                    },
+                    async:false,
+                    error: function(data){
+                        alert("Oeps er iets iets fout gelopen");
+                    }                    
+                });              
+        }
+
         function getWeatherOw(){ 
             var data = JSON.parse(sessionStorage.getItem('gebruiker'));  
             //alert(data);          

@@ -98,9 +98,9 @@ class Usermanager {
                 $stmt->bindParam(':an',$gebruiker->achternaam);
                 $stmt->bindParam(':loc',$gebruiker->locatie);
                 $stmt->bindParam(':owid',$gebruiker->owid);
-                $stmt->bindParam(':el',$gebuiker->energieleverancier);
+                $stmt->bindParam(':el',$gebruiker->energieleverancier);
                 $stmt->bindParam(':enid',$gebruiker->enid);
-                $stmt->bindParam(':lc',$gebuiker->landcode);
+                $stmt->bindParam(':lc',$gebruiker->landcode);
                 $stmt->bindParam(':gl',$gebruiker->gasLeverancier);
                 $succes = $stmt->execute();
                 return $succes;
