@@ -11,11 +11,14 @@ if (!isset($_GET['methode']) && !isset($_POST['methode'])) {
     die("No method selected");
     
 }else if (isset($_GET['methode'])) {
-
     $client = new SoapClient("http://localhost/SOAproject/EnergieBronBepaler/GasLeverancierService.php?wsdl", 
             array('trace' => 1, 'cache_wsdl' => WSDL_CACHE_NONE));
 
     $gasleverancier = $client->getGasleverancier($_GET['gasleverancier']);
+    if ($gasleverancier == NULL) {
+    	print json_encode(["message" => 'gasleverancier niet gekent']);
+    	return;
+    }
     $gasPrijzen = $client->getGasprijzen($gasleverancier->id);
 
     $urlenergie = "http://usermanager-167313.appspot.com/getData?&key=". "5717271485874176" . "&distributor=" . $_GET['energieleverancier'];
@@ -25,7 +28,13 @@ if (!isset($_GET['methode']) && !isset($_POST['methode'])) {
 	    CURLOPT_HEADER => false,
 	    CURLOPT_RETURNTRANSFER => true
 	));
-    $energieleverancier = json_decode(curl_exec($ch));
+    $energieleverancier = json_decode(curl_exec($ch)); 
+    
+    if ($energieleverancier->message != 'succes') {
+    	print json_encode(["message" => 'fout energieleverancier niet gekend']);
+    	return;
+    }
+
     for ($i=1; $i < 25; $i++) { 
 		if ($i >= 8 && $i <= 17) {
 			$energijprijs[$i] = $energieleverancier->Distributor_info->Dagtarief;
@@ -60,12 +69,12 @@ if (!isset($_GET['methode']) && !isset($_POST['methode'])) {
 		}  else {
 			$bron[$key] = ['timestamp' => $value->dt_txt , 'result' =>'E'];
 		}
-
-		
-
 	}
 
-	echo json_encode($bron);
+	$antwoord = new \stdClass();
+	$antwoord->message = "succes";
+	$antwoord->data = $bron;
+	echo json_encode($antwoord);
 
 }else if (isset($_POST['methode'])) {
 
