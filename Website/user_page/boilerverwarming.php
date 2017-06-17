@@ -30,6 +30,8 @@
     <script type="text/javascript">
         
         $( function(){
+            checkToken();
+
             var data = JSON.parse(sessionStorage.getItem('gebruiker')) ;
            key = data.gebruiker.enid;
            leverancier = data.gebruiker.energieleverancier;
@@ -50,6 +52,32 @@
                 }
             });
         });
+
+        function checkToken(){
+            $.ajax("http://localhost/SOAproject/UserService_PHP/Authenticatie/authenticatie.php",
+                {
+                    data:{
+                        methode: "checkToken",
+                        jwt: sessionStorage.getItem('token'),
+                    },
+                    type: "POST",
+                    success: function (data){
+                        //alert(JSON.stringify(data));                        
+                        if (data.message === "gelukt") {
+                            
+                        }    
+                        else{
+                            window.location.href ="http://localhost/SOAproject/Website/indexREST.php";
+                            sessionStorage.setItem('gebruiker',null); 
+                            sessionStorage.setItem('token',null); 
+                        }                    
+                    },
+                    async:false,
+                    error: function(data){
+                        alert("Oeps er iets iets fout gelopen");
+                    }                    
+                });              
+        }
            
         function draw(v){
            google.charts.load('current', {'packages':['corechart']});

@@ -31,8 +31,34 @@
     <script type="text/javascript">
         
         $( function(){
-           
+           checkToken();
         });
+
+        function checkToken(){
+            $.ajax("http://localhost/SOAproject/UserService_PHP/Authenticatie/authenticatie.php",
+                {
+                    data:{
+                        methode: "checkToken",
+                        jwt: sessionStorage.getItem('token'),
+                    },
+                    type: "POST",
+                    success: function (data){
+                        //alert(JSON.stringify(data));                        
+                        if (data.message === "gelukt") {
+                            
+                        }    
+                        else{
+                            window.location.href ="http://localhost/SOAproject/Website/indexREST.php";
+                            sessionStorage.setItem('gebruiker',null); 
+                            sessionStorage.setItem('token',null); 
+                        }                    
+                    },
+                    async:false,
+                    error: function(data){
+                        alert("Oeps er iets iets fout gelopen");
+                    }                    
+                });              
+        }
            
         function draw(v){
            google.charts.load('current', {'packages':['corechart']});
@@ -177,16 +203,12 @@
                         <div id="cloud_chart" style="width: 600px; height: 250px; float:left"></div>
                         <div id="screens_chart" style="width: 1200px; height: 500px; float:left"></div>
                         
-                        
-                        <!-- Toggle button for the menu
-                        <a href="#menu-toggle" class="btn btn-default" id="menu-toggle">Toggle menu</a>
                         -->
                     </div>
                 </div>
             </div>
         </div>
-        <!-- /#page-content-wrapper -->
-
+        
     </div>
     <!-- /#wrapper -->
 
