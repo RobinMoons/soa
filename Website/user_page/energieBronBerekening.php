@@ -45,7 +45,7 @@
                     success: function (data){
                         //alert(JSON.stringify(data));                        
                         if (data.message === "gelukt") {
-                            
+                            //alert("token oké");
                         }    
                         else{
                             window.location.href ="http://localhost/SOAproject/Website/indexREST.php";
@@ -108,9 +108,11 @@
             
         function callBestEnergySource() {
             var data = JSON.parse(sessionStorage.getItem('gebruiker')) ;
-            var energieleverancier = data.gebruiker.energieleverancier;
+            var energieleverancier = data.gebruiker.energieleverancier;            
             var gasleverancier = data.gebruiker.gasLeverancier;  
-            $.ajax("http://localhost/SOAproject/EnergieBronBepaler/EnergieBronBepalerRest.php?methode=call&gasleverancier=" + gasleverancier + "&energieleverancier=" + energieleverancier,
+
+
+            $.ajax("http://localhost/SOAproject/EnergieBronBepaler/EnergieBronBepalerRest.php?methode=get&gasleverancier=" + gasleverancier + "&energieleverancier=" + energieleverancier,
             {
                 data: {
                     format: 'json'

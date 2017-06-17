@@ -34,6 +34,9 @@
             jsGetDataGebruiker();            
             getWeatherOw();
             doeRequestYh();
+
+            
+
         });
 
         
@@ -51,7 +54,8 @@
                 success: function (data){
                     if (typeof data.mislukt === "undefined") {
                         //alert(JSON.stringify(data));
-                        sessionStorage.setItem('gebruiker',JSON.stringify(data));                        
+                        sessionStorage.setItem('gebruiker',JSON.stringify(data)); 
+                        document.getElementById("welcome").innerHTML = "Welkom " + data.gebruiker.gebruikersnaam;                  
                     } else {
                         alert(data.mislukt);
                     }
@@ -271,7 +275,7 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12">
-                        <!--<h1>Welkom <?php echo json_decode($_SESSION['gebruiker'])->gebruiker->voornaam?>  <?php echo json_decode($_SESSION['gebruiker'])->gebruiker->achternaam?>  </h1>     -->
+                        <h1 id='welcome'>Welkom </h1>     
                         <p id="error"></p>
                                                    
                         <div>       
@@ -281,27 +285,7 @@
                             <p id="resultaatOw"> </p>
                         </div>
                         
-                        <!--
-                        <div>Weather from Yahoo</div>
-                        <input type="button" value="Clear" onclick="clearYh();" />
-                        <div>      
-                            <h1><i id="icoYahoo"></i></h1>
-                            <p id="resultaatYh"> </p>
-                        </div>
                         
-                        <div>Data from Energys ervice</div>
-                        <input type="button" value="Clear" onclick="clearEs();" />
-                        <div>                             
-                            <p id="resultaatEs"> </p>
-                        </div>
-                        
-                        <div>Draw Chart</div>
-                        <input type="button" value="Draw" onclick="draw();" />                            
-                        <div id="curve_chart" style="width: 900px; height: 500px"></div>
-                        -->
-                        <!-- Toggle button for the menu
-                        <a href="#menu-toggle" class="btn btn-default" id="menu-toggle">Toggle menu</a>
-                        -->
                     </div>
                 </div>
             </div>

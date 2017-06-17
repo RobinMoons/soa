@@ -92,9 +92,10 @@
                 type: "GET",
                 success: function (data){
                     if (typeof data.mislukt === "undefined") {
-                        alert(data.mislukt);                      
-                    } else {
-                        sessionStorage.setItem('gebruiker',JSON.stringify(data));                          
+                        sessionStorage.setItem('gebruiker',JSON.stringify(data));
+                    } 
+                    else {
+                                                  
                     }
                 },
                 async:false,
