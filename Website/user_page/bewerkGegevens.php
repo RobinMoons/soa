@@ -46,7 +46,7 @@
             var owid =  data.gebruiker.owid;
             var energieleverancier =  data.gebruiker.energieleverancier;
             var enid =  data.gebruiker.enid;
-            var gasleverancier = data.gebruiker.gasleverancier;
+            var gasleverancier = data.gebruiker.gasLeverancier;
 
             if (gebruikersnaam != null){
                 document.getElementById("header").innerHTML = "Gebruiker: " + gebruikersnaam;
