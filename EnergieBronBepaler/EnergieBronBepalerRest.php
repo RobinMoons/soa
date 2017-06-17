@@ -56,9 +56,9 @@ if (!isset($_GET['methode']) && !isset($_POST['methode'])) {
 		}
 
 		if (($gaspr * 2 *3) < (3 - opgewerkteZonnenEnergie($zon)) * 3 * $energiepr ) {
-			$bron[$value->dt_txt] = 'G';
+			$bron[$key] = ['timestamp' => $value->dt_txt , 'result' =>'G'];
 		}  else {
-			$bron[$value->dt_txt] = 'E';
+			$bron[$key] = ['timestamp' => $value->dt_txt , 'result' =>'E'];
 		}
 
 		
