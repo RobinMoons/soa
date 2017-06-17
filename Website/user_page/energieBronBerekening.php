@@ -45,19 +45,40 @@
             sourceArray.addColumn('number', 'energiebron');    
             sourceArray.addColumn({type:'string', role: 'annotation' });   
             sourceArray.addColumn({type:'string', role: 'style' });
-        }
-
         
-        for (i = 0; i < jsonData.length; i++){
-                var dateTime = jsonData[i].timestamp;
-                var result = jsonData[i].result;
-                strTimeStamp = String(dateTime);
-                strTimeStamp = strTimeStamp.substring(4,10) + " " + strTimeStamp.substring(16,21);
+        
+            if (jsonData.message ==="succes"){
+                for (i = 0; i < jsonData.data.length; i++){
+                    var dateTime = jsonData.data[i].timestamp;
+                    var result = jsonData.data[i].result;
+                    strTimeStamp = String(dateTime);
+                    strTimeStamp = strTimeStamp.substring(5,10) + ", " + strTimeStamp.substring(11,16);
+                    if (result === "E"){
+                        sourceArray.addRow([strTimeStamp,100,'E','color: yellow']);
+                    }
+                    if (result === "G"){
+                        sourceArray.addRow([strTimeStamp,100,'G','color: green']);
+                    }
+                }
+            }
+            else
+            {
+                alert("no succes");
+            }
 
+            var sourceOptions = {
+                title: 'Bepaling van de zuinigste energiebron',
+                bar: {groupWidth: "100%"},           
+                'vAxis': {'title': ' ',
+                            'minValue': 0, 
+                            'maxValue': 100},
+            };
 
+            var sourceChart = new google.visualization.ColumnChart(document.getElementById('source_chart'));
+            sourceChart.draw(sourceArray, sourceOptions);  
         }
         
-
+            
         function callBestEnergySource() {
             var data = JSON.parse(sessionStorage.getItem('gebruiker')) ;
             var energieleverancier = data.gebruiker.energieleverancier;
@@ -66,13 +87,13 @@
             {
                 data: {
                     format: 'json'
-                },
+                },               
                 dataType: 'json',
                 success: function (data) {
                     var jsonString = JSON.stringify(data);
-                    alert(jsonString);
+                    //alert(jsonString);
                     draw(data);
-                },
+                },                
                 error: function (data) {
                     alert("fout");
                 }
@@ -95,6 +116,7 @@
             <div class="row">
                 <h1>Energie bron berekening</h1>    
                 <p>Op onderstaande grafiek is te zien welke energie bron het rendabelste is.</p>
+                <div id="source_chart" style="width: 1200px; height: 500px; float:left"></div>
 	</div>
         </div>
         <!-- /#page-content-wrapper -->

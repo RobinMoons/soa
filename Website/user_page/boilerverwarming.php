@@ -43,6 +43,7 @@
                     var jsonString = JSON.stringify(data);   
                     nachttarief = data["Distributor_info"].Nachttarief;
                     dagtarief = data["Distributor_info"].Dagtarief;
+                    calculate();
                 },
                 error: function (data) {
                     alert("fout");
@@ -136,8 +137,7 @@
             var boilerOptions = {
                 title: 'Energiebron opwarmen boiler',
                 bar: {groupWidth: "100%"},
-                //curveType: 'function',
-                legend: { position: 'bottom' },
+                //curveType: 'function',                
                 'vAxis': {'title': ' ',
                             'minValue': 0, 
                             'maxValue': 100},
@@ -165,14 +165,9 @@
                     format: 'json'
                 },
                 dataType: 'json',
-                success: function (data) {
-                    //alert("gelukt");
-                    //var xmlString = (new XMLSerializer()).serializeToString(data);
-                    var jsonString = JSON.stringify(data);
-                    
+                success: function (data) {                    
+                    var jsonString = JSON.stringify(data);                    
                     draw(data);
-                    //$("#preForXMLResponse").html('<pre>'+data+'</pre>');
-                   // $("#woord").html(data);
                 },
                 error: function (data) {
                     alert("fout");
@@ -196,8 +191,7 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12">
-                        <h1>Berekening verwarmen van buffervat</h1>    
-                         <input type="button" value="Bereken" onclick="calculate();" />    
+                        <h1>Berekening verwarmen van buffervat</h1>                             
                         <h2>Boiler verwarming</h2>     
                         <div id="cloud_chart" style="width: 600px; height: 250px; float:left"></div>
                         <div id="price_chart" style="width: 600px; height: 250px; float:left"></div>
