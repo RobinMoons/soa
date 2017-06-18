@@ -1,7 +1,6 @@
 
 
 <?php
-
 header('Content-Type: application/json');
 header('Access-Control-Allow-Origin: *'); ///// NOGGGG OPZOEKEN!!!!!
 header('Access-Control-Allow-Methods: GET, POST, OPTIONS');
@@ -53,9 +52,20 @@ if (!isset($_GET['methode']) && !isset($_POST['methode'])) {
 				    CURLOPT_HEADER => false,
 				    CURLOPT_RETURNTRANSFER => true
 				));
+				$openfor =  json_decode(curl_exec($ch));
+
+				$urlweer = "http://api.openweathermap.org/data/2.5/weather?id=" . "2795648" . "&units=metric&APPID=a4a530758bce79a5b8ef70c4b2a2a71b&mode=json";
+			    $ch = curl_init($urlweer);
+				curl_setopt_array($ch, array( 
+				    CURLOPT_FOLLOWLOCATION => true,
+				    CURLOPT_HEADER => false,
+				    CURLOPT_RETURNTRANSFER => true
+				));
 				$openw =  json_decode(curl_exec($ch));
-				//($openw->list[$i]->clouds->all);
-				foreach ($openw->list as $key => $value) {
+				$sunset = intval(date('H',$openw->sys->sunset));
+				$sunrise = intval(date('H',$openw->sys->sunrise));
+
+				foreach ($openfor->list as $key => $value) {
 					$time = strtotime($value->dt_txt);
 					$uur = intval(date('H',$time));
 					$zon = 1 - $value->clouds->all/100;
@@ -67,10 +77,18 @@ if (!isset($_GET['methode']) && !isset($_POST['methode'])) {
 						$energiepr = $energijprijs[$uur];
 					}
 
-					if (($gaspr * 2 *3) < (3 - opgewerkteZonnenEnergie($zon)) * 3 * $energiepr ) {
-						$bron[$key] = ['timestamp' => $value->dt_txt , 'result' =>'G'];
-					}  else {
-						$bron[$key] = ['timestamp' => $value->dt_txt , 'result' =>'E'];
+					if ($sunrise+1 <= $uur && $uur <= $sunset-1) {
+						if (($gaspr * 2 *3) < (3 - opgewerkteZonnenEnergie($zon)) * 3 * $energiepr ) {
+							$bron[$key] = ['timestamp' => $value->dt_txt , 'result' =>'G'];
+						}  else {
+							$bron[$key] = ['timestamp' => $value->dt_txt , 'result' =>'E'];
+						}
+					} else {
+						if (($gaspr * 2 *3) < 3 * 3 * $energiepr ) {
+							$bron[$key] = ['timestamp' => $value->dt_txt , 'result' =>'G'];
+						}  else {
+							$bron[$key] = ['timestamp' => $value->dt_txt , 'result' =>'E'];
+						}
 					}
 				}
 
