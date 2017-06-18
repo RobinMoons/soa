@@ -8,7 +8,16 @@ header('Access-Control-Allow-Methods: GET, POST, OPTIONS');
 
 if (!isset($_GET['methode']) && !isset($_POST['methode'])) {
     die("No method selected");
-    
+}elseif ($_GET['methode'] == 'info') {
+	$info = new \stdClass();
+	$info->GET->methode->get->beschrijving = "Deze berekent wanneer het ideale moment is om elektrisch te verwarmen of met gas te verwarmen";
+	$info->GET->methode->get->parameters->energieleverancier = "Bij welke energiemaatschappij moeten de stroomprijzen opgehaald worden";
+	$info->GET->methode->get->parameters->gasleverancier = "Bij welke gasmaatschappij moeten de gasprijzen opgehaald worden";
+	$info->GET->methode->get->parameters->owid = "De id van de locatie voor openweahtermap";
+	$info->POST->methode = "Geen post methodes";
+
+	print json_encode($info);
+  
 }else if (isset($_GET['methode'])) {
 	switch($_GET['methode']){
 		case 'get' :

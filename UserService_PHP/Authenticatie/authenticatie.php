@@ -9,6 +9,15 @@ header('Access-Control-Allow-Methods: GET, POST, OPTIONS');
 
 if (!isset($_GET['methode']) && !isset($_POST['methode'])) {
     die("No method selected");
+}elseif ($_GET['methode'] == 'info') {
+    $info = new \stdClass();
+    $info->POST->methode->login->beschrijving = "Deze methode vergelijkt het paswoord met de gebruikersnaam, als deze juist zijn wordt er een jwt token aangemaakt";
+    $info->POST->methode->login->parameters->gebruikersnaam = "Gebruikersnaam";
+    $info->POST->methode->login->parameters->wachtwoord = "wachtwoord";
+    $info->POST->methode->checkToken->beschrijving = "Controleert of de token nog geldig is";
+    $info->POST->methode->checkToken->parameters->jwt = "de jwt token";
+    $info->GET->methode = "geen get methodes beschikbaar";
+    print json_encode($info);
 
 }else if (isset($_POST['methode'])) {
     switch ($_POST['methode']) {
