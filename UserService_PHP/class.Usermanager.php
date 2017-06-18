@@ -1,18 +1,19 @@
 <?php
 /**
- * blabla
- * @pw_element int $id blabla
- * @pw_element string $gebruikersnaam blabla
- * @pw_element string $voornaam blabla
- * @pw_element string $achternaam blabla
- * @pw_element string $licentie blabla
- * @pw_element string $locatie blabla
- * @pw_element string $owid blabla
- * @pw_element string $energieleverancier blabla
- * @pw_element string $enid blabla
- * @pw_element string $landcode blbla
- * @pw_element string $gasLeverancier
- * @pw_element string $email
+ * Gegevens van de gebruiker
+ * 
+ * @pw_element int $id het id van de gebruiker
+ * @pw_element string $gebruikersnaam de gebruikersnaam
+ * @pw_element string $voornaam de voornaam
+ * @pw_element string $achternaam de achternaam
+ * @pw_element string $licentie licentie van de gebruiker, van wat mag deze gebruiker gebruik maken en wat niet
+ * @pw_element string $locatie Waar woont de gebruiker
+ * @pw_element string $owid de id van de locatie in openweather
+ * @pw_element string $energieleverancier bij welke stroomleverancier is de gebruiker aangesloten
+ * @pw_element string $enid id van de stroomleverancier
+ * @pw_element string $landcode landcode
+ * @pw_element string $gasLeverancier bij welke gasleverancier is de gebruiker aangesloten
+ * @pw_element string $email email van de gerbuker
  * @pw_complex Gebruiker
  */
 require 'class.Gebruiker.php';
@@ -23,14 +24,14 @@ class Usermanager {
     private $pdo;
 
     /**
-     * 
+     *  De constructor van Usermanager en zorgt voor de connectie met de db
      */
     public function __construct() {
         $this->pdo = new PDO("mysql:host=localhost;dbname=soa", "root", "");
     }
 
     /**
-     * 
+     * Deze functie registreert een nieuwe gebruiker
      * @param string $email
      * @param string $gebruikersnaam
      * @param string $wachtwoord
@@ -55,8 +56,8 @@ class Usermanager {
     }
 
     /**
-     * 
-     * @param string $jwt
+     * De functie haalt een gebruiker op aan de hand van zijn API token.
+     * @param string $jwt API token
      * @return Gebruiker klasse gebruiker
      */
     public function getGebruiker($jwt) {
@@ -81,9 +82,9 @@ class Usermanager {
         }
     }
     /**
-     *
+     * deze functie updatet de gebruiker
      * @param string $jwt de apitoken als verificatie
-     * @param Gebruiker $gebruiker
+     * @param Gebruiker $gebruiker de gebruiker
      * @return string true als het lukt , false als het mislukt
      */  
     public function updateGebruiker($jwt,$gebruiker) {

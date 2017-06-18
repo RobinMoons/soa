@@ -22,6 +22,7 @@ import static com.google.appengine.api.datastore.Query.*;
  */
 public class DataStoreServlet_getData extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        //een POST request wordt hetzelfde afgehandeld als een GET
         doGet(request,response);
     }
     // if user has 'get' rights, return distributor info
@@ -34,6 +35,7 @@ public class DataStoreServlet_getData extends HttpServlet {
         PrintWriter out = response.getWriter();
         JSONObject json = new JSONObject();
 
+        //haal parameters op uit de request
         String pKey = request.getParameter("key");
         String pDistributor = request.getParameter("distributor");
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();

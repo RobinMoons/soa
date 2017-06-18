@@ -1,14 +1,14 @@
 <?php  
 
 /**
- * Deze klassen haalt uit een database de gasprijs op voor een heledag
- * @pw_element int $id
- * @pw_element string $leverancier
- * @pw_element double $prijsHoog
- * @pw_element int $uurHoog
- * @pw_element double $prijsLaag
- * @pw_element int $uurLaag
- * @pw_complex record
+ * record bevat informatie van de gasleverancier
+ * @pw_element int $id het id nummer van de gasleverancier
+ * @pw_element string $leverancier de naam van de gasleverancier
+ * @pw_element double $prijsHoog de prijs van het dagtarief
+ * @pw_element int $uurHoog het uur wanneer het dagtarief begint
+ * @pw_element double $prijsLaag de prijs van het nachttarief
+ * @pw_element int $uurLaag het uur wanneer het nachttarief begint
+ * @pw_complex record bevat informatie van de gasleverancier
 */
 class GasLeverancier {
 
@@ -22,6 +22,7 @@ class GasLeverancier {
 	}
 
 	/**
+	 * Haal alle gasleveranciers op
 	 * @return array een lijst van energieLeveranciers
 	 */
 	function getGasleveranciers(){
@@ -39,6 +40,7 @@ class GasLeverancier {
 	}
 
 	/**
+	 * haal één gasleverancier op met naam, als deze niet correct krijgt met een leeg object terug.
 	 * @param string $leverancier de naam van de leverancier
 	 * @return Record informatie van de leverancier terug 
 	 */
@@ -59,6 +61,7 @@ class GasLeverancier {
 
 
 	/**
+	 * Haalt de gasprijzen op per uur van een gasleverancier met id.
 	 * @param int $id het id nummer van de gasLeverancier
 	 * @return array deze array bevat per uur de gasprijs per kwh
 	 */

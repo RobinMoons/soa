@@ -27,24 +27,15 @@
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript" src="jquery-3.2.1.min.js"></script> 
     <script type="text/javascript" src="require.js"></script> 
-    <script type="text/javascript">             
-        function logout(){            
-            $.ajax("http://localhost/SOAproject/Website/session.php",
-            {
-               type: "POST",   
-               data : {
-                   logout: "logout"
-                },  
-               success: function(data){                   
-                   window.location.href = "index.php";
-               }
-            });        
-        }   
+    <script type="text/javascript">         
+       
+       //functie om een mail te zenden via de mailService
         function sendMail(){
             name = $("#name").val();
             email = $("#email").val();
             message = $("#message").val();
             
+            //stuur naar de zendmail service, deze zal via PHP de service oproepen
              $.ajax("sendMail.php",
             {
                 data:{

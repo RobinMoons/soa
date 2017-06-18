@@ -33,10 +33,12 @@
         
         <script type="text/javascript">
         
-
-            function jsLogin(){                
+            //Login functie, gebruik makend van API token
+            function jsLogin(){    
+                //haal username en passwoord uit het formulier            
                 username = $("#form-username").val();
                 passwoord = $("#form-password").val();
+                //Stuur request naar Authentificatieservice
                 $.ajax("http://localhost/SOAproject/UserService_PHP/Authenticatie/authenticatie.php",
                 {
                     data:{
@@ -45,37 +47,23 @@
                         wachtwoord: passwoord
                     },
                     type: "POST",
-                    success: function (data){                    
+                    success: function (data){   
+                        //als niet mislukt, ga naar de volgende pagina, en sla het token op in de sessionStorage                 
                         if (typeof data.mislukt === "undefined") {
-                            sessionStorage.setItem('token',data.jwt);
-                            window.location.href = "user_page/index.php";
+                            sessionStorage.setItem('token',data.jwt); //sla het de API token op
+                            window.location.href = "user_page/index.php"; //navigeer naar volgende pagina
                         } else {
                             alert(data.mislukt);
                         }
                         
                     },
                     error: function(data){
+                        alert(data);
                         alert("Oeps er iets iets fout gelopen");
                     }                    
                 }); 
             }
-            function startSession(user){
-                $.ajax("http://localhost/SOAproject/Website/session.php",
-                {
-                   type: "POST",   
-                   data : {
-                       gebruiker: user
-                   },                                    
-                   success: function(data){    
-                        var w = window.location.href = "user_page/index.php";
-                        var token = {JWT : store.JWT};
-                        w.myVariable  = token;
-                   },
-                   error: function(data){
-                        alert("start session failed");
-                    }
-                });
-            }
+
         </script> 
 
     </head>

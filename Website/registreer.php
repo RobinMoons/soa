@@ -31,15 +31,15 @@
         <link rel="apple-touch-icon-precomposed" href="assets/ico/apple-touch-icon-57-precomposed.png">
         <script type="text/javascript" src="jquery-3.2.1.min.js"></script> 
         
-        <script type="text/javascript">
-        
-            
-            function jsRegister(){                
+        <script type="text/javascript">        
+            //functie om een nieuwe gebruiker te registreren
+            function jsRegister(){   
+                //haal de gegevens op uit de pagina             
                 username = $("#form-username").val();
                 passwoord = $("#form-password").val();
                 passwoord2 = $("#form-password2").val();
                 email = $("#form-email").val();
-
+                //check of de passwoord lengte < 7, geef dan een errormelding
                 if(passwoord.length < 7){
                     document.getElementById("form-info").innerHTML = "Wachtwoord moet meer dan 6 karakters bevatten!";
                     document.getElementById("form-info").style.color = "#ff0000";
@@ -47,7 +47,9 @@
                     document.getElementById("form-password2").innerHTML = "";
                 }
                 else{
+                    //indien lengte oké, check of de twee passwoorden gelijk zijn
                     if (passwoord === passwoord2){
+                        //stuur naar usermanagerREST de gegevens van de nieuwe gebruiker, en registreermethode
                         $.ajax("http://localhost/SOAproject/UserService_PHP/usermanagerREST.php",
                         {
                             data:{
@@ -58,14 +60,15 @@
                             },
                             type: "POST",
                             success: function (data){
+                                window.location.href ="http://localhost/SOAproject/Website/indexREST.php";
                                 //alert(data);                                
                             },
                             error: function(data){
-                               // alert(JSON.stringify(data));
+                               alert(JSON.stringify(data));
                             }                    
                         });       
                     }
-                    else
+                    else //als de passwoordlengtes niet gelijk zijn, geef errormelding
                     {
                         document.getElementById("form-info").innerHTML = "Wachtwoorden zijn niet gelijk!";
                         document.getElementById("form-info").style.color = "#ff0000";

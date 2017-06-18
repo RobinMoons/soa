@@ -28,12 +28,15 @@
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript" src="jquery-3.2.1.min.js"></script> 
     
-    <script type="text/javascript">        
+    <script type="text/javascript">     
+        //wanneer de pagina geladen wordt
         $( function(){
+            //check token
             checkToken();
-           callBestEnergySource();
+            //roep de functie op om de energiebron te berekenen en tekenen
+            callBestEnergySource();
         });     
-
+        //functie voor  het checken van het token
         function checkToken(){
             $.ajax("http://localhost/SOAproject/UserService_PHP/Authenticatie/authenticatie.php",
                 {
@@ -59,7 +62,7 @@
                     }                    
                 });              
         }
-
+        //teken de gegevens
         function draw(v){
            google.charts.load('current', {'packages':['corechart']});
            google.charts.setOnLoadCallback(drawChart);      
@@ -73,8 +76,9 @@
             sourceArray.addColumn({type:'string', role: 'annotation' });   
             sourceArray.addColumn({type:'string', role: 'style' });
         
-        
+            //als de data goed is
             if (jsonData.message ==="succes"){
+                //doorloop de lijst met gegevens en bouw de array op
                 for (i = 0; i < jsonData.data.length; i++){
                     var dateTime = jsonData.data[i].timestamp;
                     var result = jsonData.data[i].result;
@@ -105,14 +109,15 @@
             sourceChart.draw(sourceArray, sourceOptions);  
         }
         
-            
+        //functie die de gegevens gaat ophalen, die berekendw orden door de EnergieBronBepalerRest    
         function callBestEnergySource() {
+            //haal de gegevens op uit de variabele
             var data = JSON.parse(sessionStorage.getItem('gebruiker')) ;
             var energieleverancier = data.gebruiker.energieleverancier;            
             var gasleverancier = data.gebruiker.gasLeverancier;  
-
-
-            $.ajax("http://localhost/SOAproject/EnergieBronBepaler/EnergieBronBepalerRest.php?methode=get&gasleverancier=" + gasleverancier + "&energieleverancier=" + energieleverancier,
+            var owid = data.gebruiker.owid;
+            //stuur GET request naar de service met als parameters de leveranciers en het OWID die gebruikt zal worden om de weerinfo op te halen
+            $.ajax("http://localhost/SOAproject/EnergieBronBepaler/EnergieBronBepalerRest.php?methode=get&gasleverancier=" + gasleverancier + "&energieleverancier=" + energieleverancier + "&owid=" + owid,
             {
                 data: {
                     format: 'json'
