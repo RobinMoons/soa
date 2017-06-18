@@ -34,11 +34,12 @@
         <script type="text/javascript">
         
             
-            
-            function jsWachtwoordVergeten(){      
+            //functie om vergeten wachtwoord op te vragen
+            function jsWachtwoordVergeten(){  
+                //haal gegevens op uit formulier    
                 email = $("#form-email").val();
                 message = $("#message").val();
-                
+                //stuur gegevens naar sendMail service
                  $.ajax("user_page/sendMail.php",
                 {
                     data:{
@@ -48,7 +49,9 @@
                     },
                     type: "POST",
                      success: function (data){
+                        //indien gelukt, toon boodschap
                          alert("Aanvraag nieuw wachtwoord verzonden!");
+                         //navigeer naar volgende pagina
                          window.location.href = "indexREST.php";
                      },
                      error: function(data){
