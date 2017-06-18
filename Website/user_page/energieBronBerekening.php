@@ -110,9 +110,9 @@
             var data = JSON.parse(sessionStorage.getItem('gebruiker')) ;
             var energieleverancier = data.gebruiker.energieleverancier;            
             var gasleverancier = data.gebruiker.gasLeverancier;  
+            var owid = data.gebruiker.owid;
 
-
-            $.ajax("http://localhost/SOAproject/EnergieBronBepaler/EnergieBronBepalerRest.php?methode=get&gasleverancier=" + gasleverancier + "&energieleverancier=" + energieleverancier,
+            $.ajax("http://localhost/SOAproject/EnergieBronBepaler/EnergieBronBepalerRest.php?methode=get&gasleverancier=" + gasleverancier + "&energieleverancier=" + energieleverancier + "&owid=" + owid,
             {
                 data: {
                     format: 'json'

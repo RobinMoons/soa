@@ -12,7 +12,7 @@ if (!isset($_GET['methode']) && !isset($_POST['methode'])) {
 }else if (isset($_GET['methode'])) {
 	switch($_GET['methode']){
 		case 'get' :
-			if (isset($_GET['energieleverancier']) && $_GET['gasleverancier']){
+			if (isset($_GET['energieleverancier']) && isset($_GET['gasleverancier']) && isset($_GET['owid'])){
 			    $client = new SoapClient("http://localhost/SOAproject/EnergieBronBepaler/GasLeverancierService.php?wsdl", 
 			            array('trace' => 1, 'cache_wsdl' => WSDL_CACHE_NONE));
 
@@ -45,7 +45,7 @@ if (!isset($_GET['methode']) && !isset($_POST['methode'])) {
 					}
 				}
 
-			    $urlweer = "http://api.openweathermap.org/data/2.5/forecast?id=" . "2795648" . "&units=metric&APPID=a4a530758bce79a5b8ef70c4b2a2a71b&mode=json";
+			    $urlweer = "http://api.openweathermap.org/data/2.5/forecast?id=" . $_GET['owid'] . "&units=metric&APPID=a4a530758bce79a5b8ef70c4b2a2a71b&mode=json";
 			    $ch = curl_init($urlweer);
 				curl_setopt_array($ch, array( 
 				    CURLOPT_FOLLOWLOCATION => true,
@@ -54,7 +54,7 @@ if (!isset($_GET['methode']) && !isset($_POST['methode'])) {
 				));
 				$openfor =  json_decode(curl_exec($ch));
 
-				$urlweer = "http://api.openweathermap.org/data/2.5/weather?id=" . "2795648" . "&units=metric&APPID=a4a530758bce79a5b8ef70c4b2a2a71b&mode=json";
+				$urlweer = "http://api.openweathermap.org/data/2.5/weather?id=" . $_GET['owid'] . "&units=metric&APPID=a4a530758bce79a5b8ef70c4b2a2a71b&mode=json";
 			    $ch = curl_init($urlweer);
 				curl_setopt_array($ch, array( 
 				    CURLOPT_FOLLOWLOCATION => true,
