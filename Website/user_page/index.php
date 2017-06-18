@@ -57,7 +57,7 @@
                         sessionStorage.setItem('gebruiker',JSON.stringify(data)); 
                         document.getElementById("welcome").innerHTML = "Welkom " + data.gebruiker.gebruikersnaam;                  
                     } else {
-                        alert(data.mislukt);
+                        //alert(data.mislukt);
                     }
                 },
                 async:false,
