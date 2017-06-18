@@ -58,6 +58,7 @@
                         
                     },
                     error: function(data){
+                        alert(data);
                         alert("Oeps er iets iets fout gelopen");
                     }                    
                 }); 
