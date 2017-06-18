@@ -60,10 +60,11 @@
                             },
                             type: "POST",
                             success: function (data){
+                                window.location.href ="http://localhost/SOAproject/Website/indexREST.php";
                                 //alert(data);                                
                             },
                             error: function(data){
-                               // alert(JSON.stringify(data));
+                               alert(JSON.stringify(data));
                             }                    
                         });       
                     }
