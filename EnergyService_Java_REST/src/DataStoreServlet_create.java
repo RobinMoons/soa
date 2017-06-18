@@ -15,10 +15,12 @@ import java.io.IOException;
  */
 public class DataStoreServlet_create extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        //een POST request wordt hetzelfde afgehandeld als een GET
         doGet(request,response);
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        //haal de parameters uit de request
         String pKey = request.getParameter("key");
         String pPostal = request.getParameter("postal");
         String pName = request.getParameter("name");
@@ -28,14 +30,15 @@ public class DataStoreServlet_create extends HttpServlet {
         String pNight = request.getParameter("night");
         String pNormal = request.getParameter("normal");
         String pGreen = request.getParameter("green");
-
+        //maak een nieuw JSON object, zal gebruikt worden als return value
         JSONObject json = new JSONObject();
-
+        //stel de headers in
         response.setHeader("Access-Control-Allow-Origin", "*");
         response.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
         response.setContentType("application/json");
         response.setCharacterEncoding("utf-8");
 
+        //maak het datastore object
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 
         //database url: https://console.cloud.google.com/datastore/entities/query?project=usermanager-167313&ns=&kind=providers
