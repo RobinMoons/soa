@@ -44,8 +44,10 @@
         <!-- Page Content -->
         <div id="page-content-wrapper">
             <div class="row">
-                <h1>About</h1>    
-                <p>Supercoole pagina waarvan de info nog ingevult moet worden.</p>
+                <h1>Info</h1>    
+                <p>Dit is het SOA en Cloud project van Kobe Bamps en Robin Moons (master EA-ICT).</p>
+                <p>Op deze website zijn enkele voorbeelden te zien hoe er aan de hand van weersvoorspellingen en de voorspelde energieprijzen bepaald kan worden wat de meest economisce energiebron is op ieder moment.</p>
+
 	</div>
         </div>
         <!-- /#page-content-wrapper -->

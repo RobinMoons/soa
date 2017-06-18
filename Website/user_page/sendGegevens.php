@@ -1,7 +1,7 @@
 <?PHP    
-    
+    //URL om soaprequest te doen naar de UserService
     $url = 'http://localhost/SOAproject/UserService_PHP/ClientSoap.php';
-
+        //al de gegevens uit de post variablelen
         $myvars = array(
             'jwt' => $_POST['token'],
             'voornaam' => $_POST['form-voornaam'],
@@ -25,6 +25,7 @@
         curl_setopt( $ch, CURLOPT_RETURNTRANSFER, 1);
 
         $response = curl_exec( $ch );
+        //herlaad de pagina
         echo "<script>
                 window.location.href='bewerkGegevens.php';
               </script>";  

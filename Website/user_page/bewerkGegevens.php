@@ -29,12 +29,16 @@
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript" src="jquery-3.2.1.min.js"></script> 
     
-    <script type="text/javascript">             
+    <script type="text/javascript">     
+        //wanneer de pagina geladen wordt        
         $( function(){
+            //check of het token nog geldig is
             checkToken();  
+            //haal de data van de gebruiker op uit de database en steek deze in de session variabele
             jsGetDataGebruiker();
-             //on load function
+            //haal de data van de gebruiker op uit de session variabele
             var data = JSON.parse(sessionStorage.getItem('gebruiker')) ;
+            //extract alle gegevens
             var gebruikersnaam =  data.gebruiker.gebruikersnaam;            
             var voornaam =  data.gebruiker.voornaam;
             var achternaam =  data.gebruiker.achternaam;
@@ -46,7 +50,7 @@
             var energieleverancier =  data.gebruiker.energieleverancier;
             var enid =  data.gebruiker.enid;
             var gasleverancier = data.gebruiker.gasLeverancier;
-
+            //toon de gegevens indien niet leeg
             if (gebruikersnaam != null){
                 document.getElementById("header").innerHTML = "Gebruiker: " + gebruikersnaam;
             }            
@@ -78,11 +82,12 @@
                 document.getElementById("form-gaslev").value = gasleverancier;
             }
 
-
         });
-
+        //functie voor het ophalen van de gebruikersgegevens uit de database
         function jsGetDataGebruiker() {
-            var data =  sessionStorage.getItem('token');            
+            //haal het token op uit de session variabele
+            var data =  sessionStorage.getItem('token');       
+            //doe request naar usermanagerREST     
             $.ajax("http://localhost/SOAproject/UserService_PHP/usermanagerREST.php",
             {
                 data:{
@@ -91,7 +96,9 @@
                 },
                 type: "GET",
                 success: function (data){
+                    //indien gelukt en data is niet mislukt
                     if (typeof data.mislukt === "undefined") {
+                        //sla de gebruiker op als JSONstring in de sessievariabele
                         sessionStorage.setItem('gebruiker',JSON.stringify(data));
                     } 
                     else {
@@ -104,8 +111,9 @@
                 }                    
             });        
         }
-
+        //functie voor het checken van de token, indien niet meer geldig, loguit en vernietig opgeslagen data
         function checkToken(){
+            //doe request naar authenticatieservice
             $.ajax("http://localhost/SOAproject/UserService_PHP/Authenticatie/authenticatie.php",
                 {
                     data:{
@@ -115,6 +123,9 @@
                     type: "POST",
                     success: function (data){                        
                         if (data.message === "gelukt") {
+                            //als het gelukt is (token = geldig), 
+                            //sla dit op in hidden veld op de webpagina
+                            //dit is nodig om bij de POST van de gegevens het token mee te sturen
                             document.getElementById("token").value = sessionStorage.getItem('token');
                         }    
                         else{

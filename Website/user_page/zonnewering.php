@@ -29,11 +29,13 @@
     <script type="text/javascript" src="jquery-3.2.1.min.js"></script> 
     
     <script type="text/javascript">
-        
+        //wanneer de pagina geladen wordt
         $( function(){
+            //check of het token geldig is
            checkToken();
         });
 
+        //functie voor het checken van het token
         function checkToken(){
             $.ajax("http://localhost/SOAproject/UserService_PHP/Authenticatie/authenticatie.php",
                 {
@@ -151,24 +153,22 @@
             screensChart.draw(screensArray, screensOptions);  
           }
     
-        
-        function calculate() {        
-           var data = JSON.parse(sessionStorage.getItem('gebruiker')) ;
+        //als er op de knop gedrukt wordt, word de berekening gestart
+        function calculate() {      
+            //haal de gegevens van de gebruiker op  
+            var data = JSON.parse(sessionStorage.getItem('gebruiker')) ;
             var id = data.gebruiker.owid;  
+            //doe een GET request naar de weerservice
             $.ajax("http://api.openweathermap.org/data/2.5/forecast?id=" + id + "&units=metric&APPID=a4a530758bce79a5b8ef70c4b2a2a71b&mode=json",
             {
                 data: {
                     format: 'json'
                 },
                 dataType: 'json',
-                success: function (data) {
-                    //alert("gelukt");
-                    //var xmlString = (new XMLSerializer()).serializeToString(data);
+                success: function (data) {   
+                    //on succes, teken de data                 
                     var jsonString = JSON.stringify(data);
-                    
                     draw(data);
-                    //$("#preForXMLResponse").html('<pre>'+data+'</pre>');
-                   // $("#woord").html(data);
                 },
                 error: function (data) {
                     alert("fout");

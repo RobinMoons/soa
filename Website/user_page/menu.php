@@ -1,4 +1,6 @@
 <script type="text/javascript">
+
+    //ieder menuitem 
     function navZonnewering(){
         window.location.href = "zonnewering.php";
     }
@@ -24,7 +26,8 @@
         window.location.href = "energieBronBerekening.php";
     }
     function logout(){            
-        sessionStorage.setItem('token', "");              
+        sessionStorage.setItem('token', null);  
+        sessionStorage.setItem('gebruiker', null);            
         window.location.href = "http://localhost/SOAproject/Website/indexREST.php";                  
     }  
 </script>
@@ -55,7 +58,7 @@
                 </li>
                 
                 <li>
-                    <a href="#" onclick="navAbout()">About</a>
+                    <a href="#" onclick="navAbout()">Info</a>
                 </li>                
                 <li>
                     <a href="#" onclick="navContact()">Contact</a>

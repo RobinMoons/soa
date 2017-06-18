@@ -28,20 +28,23 @@
     <script type="text/javascript" src="jquery-3.2.1.min.js"></script> 
     
     <script type="text/javascript">
-        
+        //waneer de pagina geladen wordt
         $( function(){
+            //check of het token nog geldig is
             checkToken();
-
+            //haal de gegevens van de gebruiker op uit de session variabele
             var data = JSON.parse(sessionStorage.getItem('gebruiker')) ;
-           key = data.gebruiker.enid;
-           leverancier = data.gebruiker.energieleverancier;
-           $.ajax("http://usermanager-167313.appspot.com/getData?&key="+ key + "&distributor=" + leverancier,
+            key = data.gebruiker.enid;
+            leverancier = data.gebruiker.energieleverancier;
+            //stuur GET request naar de energieservice
+            $.ajax("http://usermanager-167313.appspot.com/getData?&key="+ key + "&distributor=" + leverancier,
             {
                 data: {
                     format: 'json'
                 },
                 dataType: 'json',
                 success: function (data) {
+                    //indien gelukt; sla de gegevens op
                     var jsonString = JSON.stringify(data);   
                     nachttarief = data["Distributor_info"].Nachttarief;
                     dagtarief = data["Distributor_info"].Dagtarief;
@@ -52,7 +55,7 @@
                 }
             });
         });
-
+        //functie voor het checken van het token
         function checkToken(){
             $.ajax("http://localhost/SOAproject/UserService_PHP/Authenticatie/authenticatie.php",
                 {
@@ -78,7 +81,8 @@
                     }                    
                 });              
         }
-           
+        
+        //teken gegevens in grafiek
         function draw(v){
            google.charts.load('current', {'packages':['corechart']});
            google.charts.setOnLoadCallback(drawChart);      
@@ -119,10 +123,10 @@
                 var rateBewolking = 0;
                 sunrise = sessionStorage.getItem("Sunrise");
                 sunset = sessionStorage.getItem("Sunset");
-                //alert (sunrise + "-" + sunset + "-" + time);
+                //als de voorwaarden voldoen
                 if(time > sunrise && time < sunset)
                 {
-                    priceArray.addRow([strTimeStamp,       dagtarief]  );
+                    priceArray.addRow([strTimeStamp, dagtarief]  );
                     if (bewolking === 800){
                         rateBewolking = 100;
                     }
@@ -134,19 +138,19 @@
                         rateBewolking = 0;
                     }
                     if (rateBewolking > 0 ){
-                        boilerArray.addRow([strTimeStamp,       100, 'z',  'color: yellow']);
+                        boilerArray.addRow([strTimeStamp, 100, 'z', 'color: yellow']);
                     }
                     else
                     {
-                        boilerArray.addRow([strTimeStamp,       100,'e',  'color: green']);
+                        boilerArray.addRow([strTimeStamp, 100,'e', 'color: green']);
                     }
                 }
                 else{
-                    priceArray.addRow([strTimeStamp,       nachttarief]  );
+                    priceArray.addRow([strTimeStamp, nachttarief]);
                     rateBewolking = 0;
-                    boilerArray.addRow([strTimeStamp,       100,'e',  'color: green']);
+                    boilerArray.addRow([strTimeStamp, 100,'e',  'color: green']);
                 }                
-                cloudArray.addRow([strTimeStamp,       rateBewolking]  );
+                cloudArray.addRow([strTimeStamp, rateBewolking]);
                 
             }
             
@@ -182,9 +186,8 @@
     
           }
     
-             
+        //haal de weergegevens op en teken daarna
         function calculate() {
-            //checkSession();      
             var data = JSON.parse(sessionStorage.getItem('gebruiker')) ;
             var id = data.gebruiker.owid;                  
             $.ajax("http://api.openweathermap.org/data/2.5/forecast?id=" + id + "&units=metric&APPID=a4a530758bce79a5b8ef70c4b2a2a71b&mode=json",
