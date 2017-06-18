@@ -13,7 +13,7 @@
  * @pw_element string $enid id van de stroomleverancier
  * @pw_element string $landcode landcode
  * @pw_element string $gasLeverancier bij welke gasleverancier is de gebruiker aangesloten
- * @pw_element string $het email van de gerbuker
+ * @pw_element string $email email van de gerbuker
  * @pw_complex Gebruiker
  */
 require 'class.Gebruiker.php';
