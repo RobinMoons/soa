@@ -48,6 +48,8 @@
                 <p>Dit is het SOA en Cloud project van Kobe Bamps en Robin Moons (master EA-ICT).</p>
                 <p>Op deze website zijn enkele voorbeelden te zien hoe er aan de hand van weersvoorspellingen en de voorspelde energieprijzen bepaald kan worden wat de meest economisce energiebron is op ieder moment.</p>
 
+                <p> </p>
+
 	</div>
         </div>
         <!-- /#page-content-wrapper -->

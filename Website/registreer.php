@@ -73,11 +73,8 @@
                         document.getElementById("form-info").innerHTML = "Wachtwoorden zijn niet gelijk!";
                         document.getElementById("form-info").style.color = "#ff0000";
                     }
-                }
-
-                
-            }
-            
+                }                
+            }            
             
         </script> 
 
